@@ -11,14 +11,14 @@ describe('Testing partRepo repo', function() {
 
   it('Saves parts to DB', async function() {
     const part = new PartModel({name:'مارش'});
-    result = await partRepo.savePart(part);
-    assert(result.id == part.id);
-    id = result.id;
+    const a = await partRepo.savePart(part);
+    assert(a.id == part.id);
+    id = a.id;
   });
 
   it('Reads part form DB', async function() {
-    const result = await partRepo.findPart(id);
-    assert(result.id == id);
+    const b = await partRepo.findPart(id);
+    assert(b.id == id);
   });
 
   it('Deletes part from DB', async function () {

@@ -5,7 +5,7 @@ const savePart = async (part) => {
   return result;
 }
 
-const findPrt = async (id) => {
+const findPart = async (id) => {
   const result = await PartModel.findById(id);
   return result;
 }
@@ -15,5 +15,5 @@ const deletePart = async (id) => {
 }
 
 module.exports.savePart = savePart;
-module.exports.findPart = findPrt;
+module.exports.findPart = findPart;
 module.exports.deletePart = deletePart;
