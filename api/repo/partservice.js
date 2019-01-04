@@ -1,6 +1,6 @@
-const GovModel = require('../models/gov');
+const PartserviceModel = require('../models/product');
 
-const saveGov = async (gov) => {
+const savePartservice = async (gov) => {
   const result = await GovModel.create(gov);
   return result;
 }

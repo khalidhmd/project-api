@@ -21,14 +21,14 @@ describe('Testing govRepo repo', function() {
     assert(result.id == id);
   });
   
-  it('Adds zone to gov in DB', async function () {  
+  it('Adds zone to gov zones in DB', async function () {  
     const gov = await govRepo.findGov(id);
     await govRepo.addZone(gov, 'الأميرية');
     const result = await govRepo.findGov(id);
     assert(result.zones[0] == 'الأميرية');
   });
 
-  it('Deletes zone from zones in DB', async function () {
+  it('Deletes zone from gov zones in DB', async function () {
     const result = await govRepo.deleteZone(id, "الأميرية");
     assert(result.zones.length == 0);
   });
