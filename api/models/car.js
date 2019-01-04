@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const servicestatus = require('./servicestatus');
-const servicedefault = require('./servicedefalt');
+const {servicestatusSchema} = require('./servicestatus');
+const {servicedefaultSchema} = require('./servicedefalt');
 
 const carSchema = new mongoose.Schema({
   make: {
@@ -8,7 +8,7 @@ const carSchema = new mongoose.Schema({
     required: true
   },
   model: {
-    type: Number,
+    type: String,
     required: true
   },
   km: {
@@ -18,8 +18,8 @@ const carSchema = new mongoose.Schema({
   notes: String,
   modelyear: Number,
   photos: [String],
-  servicedefaults: [servicedefault],
-  servicestatuses: [servicestatus]
+  servicedefaults: [servicedefaultSchema],
+  servicestatuses: [servicestatusSchema]
 });
 
 module.exports = mongoose.model('car', carSchema);
