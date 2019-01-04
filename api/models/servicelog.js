@@ -1,22 +1,13 @@
 const mongoose = require('mongoose');
 
 const servicelogSchema = new mongoose.Schema({
-  service: {
-    type: String,
-    required: true
-  },
-  date: {
-    type: Date,
-    required: true
-  },
-  prevdate: {
-    type: Date,
-    required: true
-  },
+  name: { type: String, required: true },
+  date: { type: Date, default: Date.now() },
+  prevdate: { type: Date, default: Date.now() },
   partprice: Number,
   serviceprice: Number,
   notes: String,
-  car: mongoose.Schema.Types.ObjectId
+  carid: {type: mongoose.Schema.Types.ObjectId, required: true}
 });
 
 module.exports = mongoose.model('servicelog', servicelogSchema);
