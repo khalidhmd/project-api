@@ -17,7 +17,7 @@ describe('Testing govRepo repo', function() {
   });
 
   it('Reads Governorate form DB', async function() {
-    fetchedGov = await govRepo.findGov(id);
+    const result = await govRepo.findGov(id);
     assert(result.id == id);
   });
   

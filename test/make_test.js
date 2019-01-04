@@ -17,7 +17,7 @@ describe('Testing makeRepo repo', function() {
   });
 
   it('Reads car make form DB', async function() {
-    fetchedMake = await makeRepo.findMake(id);
+    const result = await makeRepo.findMake(id);
     assert(result.id == id);
   });
   
@@ -40,3 +40,4 @@ describe('Testing makeRepo repo', function() {
     assert(make == null);
   });
 });
+
