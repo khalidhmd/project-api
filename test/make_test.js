@@ -23,8 +23,7 @@ describe('Testing makeRepo repo', function() {
   
   it('Adds model to make-models in DB', async function () {  
     const make = await makeRepo.findMake(id);
-    await makeRepo.addModel(make, {name: 'Verna', logo: 'logoPath'});
-    const c = await makeRepo.findMake(id);
+    const c = await await makeRepo.addModel(make, [{name: 'Verna', logo: 'logoPath'}]);
     assert(c.models[0].name == 'Verna');
     assert(c.models[0].logo == 'logoPath')
   });

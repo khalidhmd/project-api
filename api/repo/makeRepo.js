@@ -10,8 +10,8 @@ const findMake = async (id) => {
   return result;
 }
 
-const addModel = async (make, model) => {
-  make.models.push(model);
+const addModel = async (make, models) => {
+  make.models = [...make.models, ...models];
   const result = await make.save();
   return result;
 }
