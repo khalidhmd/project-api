@@ -7,6 +7,7 @@ describe('Testing post Repo repo', function() {
   let id;
   let userId;
   let commentId;
+  let photo;
 
   before (async function () {
     await PostModel.deleteMany();
@@ -41,13 +42,24 @@ describe('Testing post Repo repo', function() {
   it('Adds comment to user post in DB', async function () {  
     const post = await postRepo.findPost(id);
     commentId = mongoose.Types.ObjectId()
-    await postRepo.addComment(post, commentId);
-    const c = await postRepo.findPost(id);
+    const c = await postRepo.addComment(post, commentId);
     assert(c.comments[0].toString() == commentId.toString());
+  });
+
+  it('Adds photo to user post in DB', async function () {  
+    const post = await postRepo.findPost(id);
+    const photo = 'photo path'
+    const c = await postRepo.addPhoto(post, photo);
+    assert(c.photos[0] == photo);
   });
 
   it('Deletes comment from user post in DB', async function () {
     const d = await postRepo.deleteComment(id, commentId);
+    assert(d.comments.length == 0);
+  });
+
+  it('Deletes photo from user post in DB', async function () {
+    const d = await postRepo.deletePhoto(id, photo);
     assert(d.comments.length == 0);
   });
 
