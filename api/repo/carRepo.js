@@ -10,8 +10,8 @@ const findCar = async (id) => {
   return result;
 }
 
-const addServicedefault = async (car, servicedefault) => {
-  car.servicedefaults.push(servicedefault);
+const addServicedefault = async (car, servicedefaults) => {
+  car.servicedefaults = [...car.servicedefaults, ...servicedefaults]
   const result = await car.save();
   return result;
 }
@@ -24,9 +24,14 @@ const deleteServicedefault = async (carId, servicename) => {
   return result;
 }
 
-const addServicestatus = async (car, servicestatus) => {
-  car.servicestatuses.push(servicestatus);
+const addServicestatus = async (car, servicestatuses) => {
+  car.servicestatuses = [...car.servicestatuses, ...servicestatuses];
   const result = await car.save();
+  return result;
+}
+
+const updateCarkm = async (carId, value) => {
+  const result = await CarModel.findByIdAndUpdate(carId,{ km: value }, { new: true });
   return result;
 }
 
@@ -49,3 +54,4 @@ module.exports.deleteServicedefault = deleteServicedefault;
 module.exports.addServicestatus = addServicestatus;
 module.exports.deleteServicestatus = deleteServicestatus;
 module.exports.deleteCar = deleteCar;
+module.exports.updateCarkm = updateCarkm;
