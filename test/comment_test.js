@@ -40,7 +40,7 @@ describe('Testing service log Repo', function() {
     assert(b.reported == true);
   });
 
-  it('Deletes service log from DB', async function () {
+  it('Deletes comment from DB', async function () {
     await commentRepo.deleteComment(id);
     const comment = await commentRepo.getComment(id);
     assert(comment == null);

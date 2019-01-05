@@ -1,20 +1,19 @@
 const mongoose = require('mongoose');
-const userModel = require('./user');
-const commentModel = require('./comment');
 
 const postSchema = new mongoose.Schema({
   make: { type: String, required: true },
-  model: { type: Number, required: true },
-  category : { required: true, enum: ['post', 'question', 'help', 'post'] },
+  model: { type: String, required: true },
+  category : { type: String, required: true, enum: ['post', 'question', 'help', 'usedpart'] },
   sold: Boolean,
+  reported: { type: Boolean, default: false},
   title: { type: String, required: true },
   modelyear: Number,
   photos: [String],
-  body: String,
-  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: commentModel.modelName }],
+  body: { type: String, required: true},
+  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'comment' }],
   price: Number,
   date: Date,
-  user: { type: mongoose.Schema.Types.ObjectId, ref: userModel.modelName }
+  userid: { type: mongoose.Schema.Types.ObjectId, ref: 'user' }
 });
 
 module.exports = mongoose.model('post', postSchema);
