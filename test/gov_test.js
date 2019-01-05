@@ -23,9 +23,7 @@ describe('Testing govRepo repo', function() {
   
   it('Adds zone to gov zones in DB', async function () {  
     const gov = await govRepo.findGov(id);
-    await govRepo.addZone(gov, 'الأميرية');
-    const c = await govRepo.findGov(id);
-    assert(c.zones[0] == 'الأميرية');
+    const c = await govRepo.addZone(gov, 'الأميرية');
   });
 
   it('Deletes zone from gov zones in DB', async function () {
