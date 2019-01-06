@@ -1,6 +1,6 @@
 const PostModel = require('../models/post');
 
-const savePost = async (post) => {
+const createPost = async (post) => {
   const result = await PostModel.create(post);
   return result;
 }
@@ -57,7 +57,7 @@ const deletePost = async (id) => {
   await PostModel.findByIdAndRemove(id);
 }
 
-module.exports.savePost = savePost;
+module.exports.createPost = createPost;
 module.exports.findPost = findPost;
 module.exports.addComment = addComment;
 module.exports.addPhoto = addPhoto;

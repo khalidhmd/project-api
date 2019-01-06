@@ -11,7 +11,7 @@ describe('Testing govRepo repo', function() {
 
   it('Saves Governorate to DB', async function() {
     const gov = new GovModel({name:'القاهرة'});
-    const a = await govRepo.saveGov(gov);
+    const a = await govRepo.createGov(gov);
     assert(a.id == gov.id);
     id = a.id;
   });

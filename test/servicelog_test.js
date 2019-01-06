@@ -13,7 +13,7 @@ describe('Testing service log Repo', function() {
 
   it('Saves service log to DB', async function() {
     const servicelog = new ServicelogModel({name:'تغيير زيت', carid: mongoose.Types.ObjectId()});
-    const a = await servicelogRepo.saveServicelog(servicelog);
+    const a = await servicelogRepo.createServicelog(servicelog);
     assert(a.id == servicelog.id);
     id = a.id;
     carid = servicelog.carid;

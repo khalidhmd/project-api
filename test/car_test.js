@@ -11,7 +11,7 @@ describe('Testing car Repo repo', function() {
 
   it('Saves user car to DB', async function() {
     const car = new CarModel({make:'Hundai', model: 'Verna'});
-    a = await carRepo.saveCar(car);
+    a = await carRepo.craeteCar(car);
     assert(a.id == car.id);
     id = a.id;
   });

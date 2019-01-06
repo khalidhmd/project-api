@@ -11,7 +11,7 @@ describe('Testing partRepo repo', function() {
 
   it('Saves parts to DB', async function() {
     const part = new PartModel({name:'مارش'});
-    const a = await partRepo.savePart(part);
+    const a = await partRepo.createPart(part);
     assert(a.id == part.id);
     id = a.id;
   });

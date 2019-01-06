@@ -1,6 +1,6 @@
 const MakeModel = require('../models/make');
 
-const saveMake = async (make) => {
+const createMake = async (make) => {
   const result = await MakeModel.create(make);
   return result;
 }
@@ -27,7 +27,7 @@ const deleteMake = async (id) => {
   await MakeModel.findByIdAndRemove(id);
 }
 
-module.exports.saveMake = saveMake;
+module.exports.createMake = createMake;
 module.exports.findMake = findMake;
 module.exports.addModel = addModel;
 module.exports.deleteModel = deleteModel;

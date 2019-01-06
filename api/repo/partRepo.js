@@ -1,6 +1,6 @@
 const PartModel = require('../models/part');
 
-const savePart = async (part) => {
+const createPart = async (part) => {
   const result = await PartModel.create(part);
   return result;
 }
@@ -14,6 +14,6 @@ const deletePart = async (id) => {
   await PartModel.findByIdAndRemove(id);
 }
 
-module.exports.savePart = savePart;
+module.exports.createPart = createPart;
 module.exports.findPart = findPart;
 module.exports.deletePart = deletePart;

@@ -18,7 +18,7 @@ describe('Testing service log Repo', function() {
       postid: mongoose.Types.ObjectId(),
       userid: mongoose.Types.ObjectId()
     });
-    const a = await commentRepo.saveComment(comment);
+    const a = await commentRepo.createComment(comment);
     assert(a.id == comment.id);
     id = a.id;
     userid = comment.userid;

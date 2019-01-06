@@ -1,6 +1,6 @@
 const GovModel = require('../models/gov');
 
-const saveGov = async (gov) => {
+const createGov = async (gov) => {
   const result = await GovModel.create(gov);
   return result;
 }
@@ -27,7 +27,7 @@ const deleteGov = async (id) => {
   await GovModel.findByIdAndRemove(id);
 }
 
-module.exports.saveGov = saveGov;
+module.exports.createGov = createGov;
 module.exports.findGov = findGov;
 module.exports.addZone = addZone;
 module.exports.deleteZone = deleteZone;

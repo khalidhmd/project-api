@@ -1,6 +1,6 @@
 const CarModel = require('../models/car');
 
-const saveCar = async (car) => {
+const craeteCar = async (car) => {
   const result = await CarModel.create(car);
   return result;
 }
@@ -47,7 +47,7 @@ const deleteCar = async (id) => {
   await CarModel.findByIdAndRemove(id);
 }
 
-module.exports.saveCar = saveCar;
+module.exports.craeteCar = craeteCar;
 module.exports.findCar = findCar;
 module.exports.addServicedefault = addServicedefault;
 module.exports.deleteServicedefault = deleteServicedefault;

@@ -1,6 +1,6 @@
 const ServicelogModel = require('../models/servicelog');
 
-const saveServicelog = async (servicelog) => {
+const createServicelog = async (servicelog) => {
   const result = await ServicelogModel.create(servicelog);
   return result;
 }
@@ -14,6 +14,6 @@ const deleteServicelog = async (id) => {
   await ServicelogModel.findByIdAndRemove(id);
 }
 
-module.exports.saveServicelog = saveServicelog;
+module.exports.createServicelog = createServicelog;
 module.exports.findServicelog = findServicelog;
 module.exports.deleteServicelog = deleteServicelog;

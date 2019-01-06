@@ -1,6 +1,6 @@
 const CommentModel = require('../models/comment');
 
-const saveComment = async (comment) => {
+const createComment = async (comment) => {
   const result = await CommentModel.create(comment);
   return result;
 }
@@ -30,7 +30,7 @@ const deleteComment = async (id) => {
 }
 
 
-module.exports.saveComment = saveComment;
+module.exports.createComment = createComment;
 module.exports.getUserComments = getUserComments;
 module.exports.getPostComments = getPostComments;
 module.exports.deleteComment = deleteComment;

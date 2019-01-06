@@ -11,7 +11,7 @@ describe('Testing service Repo', function() {
 
   it('Saves service to DB', async function() {
     const service = new ServiceModel({name:'تغيير زيت'});
-    const a = await serviceRepo.saveService(service);
+    const a = await serviceRepo.createService(service);
     assert(a.id == service.id);
     id = a.id;
   });

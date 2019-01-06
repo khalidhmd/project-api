@@ -22,7 +22,7 @@ describe('Testing post Repo repo', function() {
       body: 'test post details',
       userid: mongoose.Types.ObjectId()
     });
-    a = await postRepo.savePost(post);
+    a = await postRepo.createPost(post);
     assert(a.id == post.id);
     id = a.id;
     userId = post.userid

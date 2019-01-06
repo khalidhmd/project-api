@@ -11,7 +11,7 @@ describe('Testing makeRepo repo', function() {
 
   it('Saves car make to DB', async function() {
     const make = new MakeModel({name:'Hundai', logo: 'logoPath'});
-    a = await makeRepo.saveMake(make);
+    a = await makeRepo.createMake(make);
     assert(a.id == make.id);
     id = a.id;
   });
