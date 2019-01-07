@@ -41,7 +41,7 @@ describe('Testing user Repo repo', function() {
   });
 
   it('changes photo of user in DB', async function () {  
-    const photo = 'photo path'
+    const photo = 'changed'
     const c = await userRepo.changePhoto(id, photo);
     assert(c.photo == photo);
   });
@@ -52,31 +52,31 @@ describe('Testing user Repo repo', function() {
   });
   
   it('changes email of user in DB', async function () {  
-    const email = 'email 1'
+    const email = 'changed'
     const c = await userRepo.changeEmail(id, email);
     assert(c.email == email);
   });
 
   it('changes mobile of user in DB', async function () {  
-    const mobile = 'mobile 1'
+    const mobile = 'changed'
     const c = await userRepo.changeMobile(id, mobile);
     assert(c.mobile == mobile);
   });
 
   it('changes gov of user in DB', async function () {  
-    const gov = 'gov 1'
+    const gov = 'changed'
     const c = await userRepo.changeGov(id, gov);
     assert(c.gov == gov);
   });
 
   it('changes display name of user in DB', async function () {  
-    const name = 'name 1'
+    const name = 'changed'
     const c = await userRepo.changeName(id, name);
     assert(c.name == name);
   });
 
   it('changes zone of user in DB', async function () {  
-    const zone = 'zone 1'
+    const zone = 'changed'
     const c = await userRepo.changeZone(id, zone);
     assert(c.zone == zone);
   });
