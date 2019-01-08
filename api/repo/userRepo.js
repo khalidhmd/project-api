@@ -1,5 +1,6 @@
 const UserModel = require('../models/user');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const createUser = async (user) => {
   const hash = await bcrypt.hash(user.password, 10);
@@ -14,13 +15,23 @@ const findUser = async (id) => {
 }
 
 const signinByEmail = async (email, password) => {
-  const result = await UserModel.findById(id);
-  return result;
+  const result = await UserModel.findOne().where('email').equals(email);
+  if (!result) return;
+  const checked = await bcrypt.compare(password,result.password)
+  if(checked) {
+    const token = jwt.sign({userId: result.id},'secret', {expiresIn: '7d'});
+    return token;
+  }
 }
 
 const signinByMobile = async (mobile, password) => {
-  const result = await UserModel.findById(id);
-  return result;
+  const result = await UserModel.findOne().where('mobile').equals(mobile);
+  if (!result) return;
+  const checked = await bcrypt.compare(password,result.password)
+  if(checked) {
+    const token = jwt.sign({userId: result.id},'secret', {expiresIn: '7d'});
+    return token;
+  }
 }
 
 const changePhoto = async (userId, photoPath) => {
@@ -82,3 +93,5 @@ module.exports.changeName = changeName;
 module.exports.deleteUser = deleteUser;
 module.exports.addCar = addCar;
 module.exports.deleteCar = deleteCar;
+module.exports.signinByEmail = signinByEmail;
+module.exports.signinByMobile = signinByMobile;

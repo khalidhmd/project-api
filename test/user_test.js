@@ -3,16 +3,17 @@ const UserModel = require('../api/models/user');
 var userRepo = require('../api/repo/userRepo');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 describe('Testing user Repo repo', function() {
   let id;
   let carId;
 
-  before (async function () {
+  before (async function() {
     await UserModel.deleteMany();
   });
 
-  it('Saves user to DB with password hashed', async function() {
+  it('Saves ( signup ) user to DB with password hashed', async function() {
     const user = new UserModel({
       name:'user 1',
       password: 'password',
@@ -30,6 +31,18 @@ describe('Testing user Repo repo', function() {
   it('Reads user by Id form DB', async function() {
     const b = await userRepo.findUser(id);
     assert(b.id == id);
+  });
+
+  it('Signs user in by emai', async function () {
+    const token = await userRepo.signinByEmail('email 1', 'password');
+    const decoded = await jwt.verify(token, 'secret');
+    assert(id == decoded.userId);
+  });
+
+  it('Signs user in by mobile', async function () {
+    const token = await userRepo.signinByMobile('mobile 1', 'password');
+    const decoded = await jwt.verify(token, 'secret');
+    assert(id == decoded.userId);
   });
 
   it('Adds car to user cars in DB', async function () {  
