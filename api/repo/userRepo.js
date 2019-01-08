@@ -1,11 +1,24 @@
 const UserModel = require('../models/user');
+const bcrypt = require('bcryptjs');
 
 const createUser = async (user) => {
+  const hash = await bcrypt.hash(user.password, 10);
+  user.password = hash;
   const result = await UserModel.create(user);
   return result;
 }
 
 const findUser = async (id) => {
+  const result = await UserModel.findById(id);
+  return result;
+}
+
+const signinByEmail = async (email, password) => {
+  const result = await UserModel.findById(id);
+  return result;
+}
+
+const signinByMobile = async (mobile, password) => {
   const result = await UserModel.findById(id);
   return result;
 }

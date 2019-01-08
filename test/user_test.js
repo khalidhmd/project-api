@@ -2,6 +2,7 @@ const assert = require('assert');
 const UserModel = require('../api/models/user');
 var userRepo = require('../api/repo/userRepo');
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 describe('Testing user Repo repo', function() {
   let id;
@@ -11,12 +12,10 @@ describe('Testing user Repo repo', function() {
     await UserModel.deleteMany();
   });
 
-  it('Saves user to DB', async function() {
+  it('Saves user to DB with password hashed', async function() {
     const user = new UserModel({
       name:'user 1',
-      login: 'login 1',
-      hashpassword: 'hash 1',
-      salt: 'salt 1',
+      password: 'password',
       email: 'email 1',
       mobile: 'mobile 1',
       gov: 'gov 1',
@@ -24,6 +23,7 @@ describe('Testing user Repo repo', function() {
     });
     a = await userRepo.createUser(user);
     assert(a.id == user.id);
+    assert(await bcrypt.compare('password', a.password));
     id = a.id;
   });
 
@@ -32,7 +32,6 @@ describe('Testing user Repo repo', function() {
     assert(b.id == id);
   });
 
-  
   it('Adds car to user cars in DB', async function () {  
     const user = await userRepo.findUser(id);
     carId = [mongoose.Types.ObjectId()]
