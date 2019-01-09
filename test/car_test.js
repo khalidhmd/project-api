@@ -27,8 +27,7 @@ describe('Testing car Repo repo', function() {
   });
   
   it('Adds servicedefaults to user car in DB', async function () {  
-    const car = await carRepo.findCar(id);
-    const c = await carRepo.addServicedefault(car, [{name: 'تغيير زيت'}, {name: 'تغيير دورة تبريد'}]);
+    const c = await carRepo.addServicedefault(id, [{name: 'تغيير زيت'}, {name: 'تغيير دورة تبريد'}]);
     assert(c.servicedefaults[0].name == 'تغيير زيت');
     assert(c.servicedefaults[0].km == 10)
   });
@@ -39,8 +38,7 @@ describe('Testing car Repo repo', function() {
   });
 
   it('Adds servicestatus to user car in DB', async function () {  
-    const car = await carRepo.findCar(id);
-    const e = await carRepo.addServicestatus(car, [{name: 'تغيير زيت', nextkm: 20}]);
+    const e = await carRepo.addServicestatus(id, [{name: 'تغيير زيت', nextkm: 20}]);
     assert(e.servicestatuses[0].name == 'تغيير زيت');
     assert(e.servicestatuses[0].nextkm == 20)
   });

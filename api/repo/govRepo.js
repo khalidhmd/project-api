@@ -5,7 +5,8 @@ const createGov = async (gov) => {
   return result;
 }
 
-const addZone = async (gov, zone) => {
+const addZone = async (govId, zone) => {
+  const gov = await GovModel.findById(govId);
   gov.zones.push(zone);
   const result = await gov.save();
   return result;

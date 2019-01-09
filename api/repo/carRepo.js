@@ -10,7 +10,8 @@ const findCar = async (id) => {
   return result;
 }
 
-const addServicedefault = async (car, servicedefaults) => {
+const addServicedefault = async (carId, servicedefaults) => {
+  const car = await CarModel.findById(carId)
   car.servicedefaults = [...car.servicedefaults, ...servicedefaults]
   const result = await car.save();
   return result;
@@ -24,7 +25,8 @@ const deleteServicedefault = async (carId, servicename) => {
   return result;
 }
 
-const addServicestatus = async (car, servicestatuses) => {
+const addServicestatus = async (carId, servicestatuses) => {
+  const car = await CarModel.findById(carId);
   car.servicestatuses = [...car.servicestatuses, ...servicestatuses];
   const result = await car.save();
   return result;

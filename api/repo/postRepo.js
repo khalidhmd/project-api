@@ -15,13 +15,15 @@ const getUserPosts = async (userId) => {
   return result;
 }
 
-const addComment = async (post, commentId) => {
+const addComment = async (postId, commentId) => {
+  const post = await PostModel.findById(postId);
   post.comments.push(commentId);
   const result = await post.save();
   return result;
 }
 
-const addPhoto = async (post, photoPath) => {
+const addPhoto = async (postId, photoPath) => {
+  const post = await PostModel.findById(postId);
   post.photos.push(photoPath);
   const result = await post.save();
   return result;

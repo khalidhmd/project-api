@@ -64,7 +64,8 @@ const changeName = async (userId, name) => {
   return result;
 }
 
-const addCar = async (user, carIds) => {
+const addCar = async (userId, carIds) => {
+  const user = await UserModel.findById(userId)
   user.cars = [...user.cars, ...carIds];
   const result = await user.save();
   return result;

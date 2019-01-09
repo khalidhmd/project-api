@@ -46,9 +46,8 @@ describe('Testing user Repo repo', function() {
   });
 
   it('Adds car to user cars in DB', async function () {  
-    const user = await userRepo.findUser(id);
     carId = [mongoose.Types.ObjectId()]
-    const c = await userRepo.addCar(user, carId);
+    const c = await userRepo.addCar(id, carId);
     assert(c.cars[0].toString() == carId.toString());
   });
 

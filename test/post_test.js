@@ -40,16 +40,14 @@ describe('Testing post Repo repo', function() {
   });
   
   it('Adds comment to user post in DB', async function () {  
-    const post = await postRepo.findPost(id);
     commentId = mongoose.Types.ObjectId()
-    const c = await postRepo.addComment(post, commentId);
+    const c = await postRepo.addComment(id, commentId);
     assert(c.comments[0].toString() == commentId.toString());
   });
 
   it('Adds photo to user post in DB', async function () {  
-    const post = await postRepo.findPost(id);
     const photo = 'photo path'
-    const c = await postRepo.addPhoto(post, photo);
+    const c = await postRepo.addPhoto(id, photo);
     assert(c.photos[0] == photo);
   });
 
