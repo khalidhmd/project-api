@@ -19,30 +19,35 @@ describe('Testing service log Repo', function() {
       userid: mongoose.Types.ObjectId()
     });
     const a = await commentRepo.createComment(comment);
-    assert(a.id == comment.id);
-    id = a.id;
+    assert(a.comment.id == comment.id);
+    assert(a.err == null);
+    id = a.comment.id;
     userid = comment.userid;
     postid = comment.postid;
   });
 
   it('Reads user comments form DB', async function() {
     const b = await commentRepo.getUserComments(userid);
-    assert(b[0].id == id);
+    assert(b.comments[0].id == id);
+    assert(b.err == null);
   });
 
   it('Reads post comments form DB', async function() {
     const b = await commentRepo.getPostComments(postid);
-    assert(b[0].id == id);
+    assert(b.comments[0].id == id);
+    assert(b.err == null);
   });
 
   it('Reports comments in DB', async function() {
     const b = await commentRepo.reportComment(id);
-    assert(b.reported == true);
+    assert(b.comment.reported == true);
+    assert(b.err == null);
   });
 
   it('Deletes comment from DB', async function () {
     await commentRepo.deleteComment(id);
-    const comment = await commentRepo.getComment(id);
-    assert(comment == null);
+    const d = await commentRepo.getComment(id);
+    assert(d.comment == null);
+    assert(d.err == null);
   });
 });
