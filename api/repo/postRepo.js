@@ -1,62 +1,111 @@
 const PostModel = require('../models/post');
 
 const createPost = async (post) => {
-  const result = await PostModel.create(post);
+  const result = {};
+  try {
+    result.post = await PostModel.create(post);
+  } catch (err) {
+    result.err = err;
+  }
   return result;
 }
 
 const findPost = async (id) => {
-  const result = await PostModel.findById(id);
+  const result = {};
+  try {
+    result.post = await PostModel.findById(id);
+  } catch (err) {
+    result.err = err;
+  }
   return result;
 }
 
 const getUserPosts = async (userId) => {
-  const result = await PostModel.find().where('userid').equals(userId);
+  const result = {};
+  try {
+    result.posts = await PostModel.find().where('userid').equals(userId);
+  } catch (err) {
+    result.err = err;
+  }
   return result;
 }
 
 const addComment = async (postId, commentId) => {
-  const post = await PostModel.findById(postId);
-  post.comments.push(commentId);
-  const result = await post.save();
+  const result = {};
+  try {
+    result.post = await PostModel.findByIdAndUpdate(postId, {
+      $push: {comments: commentId}
+    }, { new: true});
+  } catch (err) {
+    result.err = err;
+  }
   return result;
 }
 
 const addPhoto = async (postId, photoPath) => {
-  const post = await PostModel.findById(postId);
-  post.photos.push(photoPath);
-  const result = await post.save();
+  const result = {};
+  try {
+    result.post = await PostModel.findByIdAndUpdate(postId, {
+      $push: {photos: photoPath}
+    }, { new: true });
+  } catch (err) {
+    result.err = err;
+  }
   return result;
 }
 
 const deleteComment = async (postId, commentId) => {
-  const post = await PostModel.findById(postId)
-  let comments = post.comments.filter( obj => obj.toString() != commentId.toString());
-  post.comments = comments;
-  const result = await post.save();
+  const result = {};
+  try {
+    result.post = await PostModel.findByIdAndUpdate(postId, {
+      $pull: {comments: commentId}
+    }, { new: true});
+  } catch (err) {
+    result.err = err;
+  }
   return result;
 }
 
 const deletePhoto = async (postId, photoPath) => {
-  const post = await PostModel.findById(postId)
-  let photos = post.photos.filter( obj => obj != photoPath);
-  post.photos = photos;
-  const result = await post.save();
+  const result = {};
+  try {
+    result.post = await PostModel.findByIdAndUpdate(postId, {
+      $pull: {photos: photoPath}
+    }, { new: true });
+  } catch (err) {
+    result.err = err;
+  }
   return result;
 }
 
 const reportPost = async (id) => {
-  const result = await PostModel.findByIdAndUpdate(id, { reported: true}, { new: true });
+  const result = {};
+  try {
+    result.post = await PostModel.findByIdAndUpdate(id, { reported: true}, { new: true });
+  } catch (err) {
+    result.err = err;
+  }
   return result;
 }
 
 const setSold = async (id) => {
-  const result = await PostModel.findByIdAndUpdate(id, { sold: true}, { new: true });
+  const result = {};
+  try {
+    result.post = await PostModel.findByIdAndUpdate(id, { sold: true}, { new: true });
+  } catch (err) {
+    result.err = err;
+  }
   return result;
 }
 
 const deletePost = async (id) => {
-  await PostModel.findByIdAndRemove(id);
+  const result = {};
+  try {
+    await PostModel.findByIdAndRemove(id);
+  } catch (err) {
+    result.err = err;
+  }
+  return result;
 }
 
 module.exports.createPost = createPost;
