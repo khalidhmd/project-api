@@ -1,31 +1,57 @@
 const MakeModel = require('../models/make');
 
 const createMake = async (make) => {
-  const result = await MakeModel.create(make);
+  const result = {};
+  try {
+    result.make = await MakeModel.create(make);
+  } catch (err) {
+    result.err = err;
+  }
   return result;
 }
 
 const findMake = async (id) => {
-  const result = await MakeModel.findById(id);
+  const result = {};
+  try {
+    result.make = await MakeModel.findById(id);
+  } catch (err) {
+    result.err = err;
+  }
+
   return result;
 }
 
 const addModel = async (makeId, models) => {
-  const make = await MakeModel.findById(makeId);
-  make.models = [...make.models, ...models];
-  const result = await make.save();
+  const result = {};
+  try {
+    result.make = await MakeModel
+    .findByIdAndUpdate(makeId, { $addToSet: { models: { $each: models }}}, { new: true});
+  } catch (err) {
+    result.err = err;
+  }
   return result;
 }
 
 const deleteModel = async (makeId, model) => {
-  const make = await MakeModel.findById(makeId)
-  make.models.splice(make.models.indexOf(model),1);
-  const result = await make.save();
+  const result = {};
+  try {
+    const make = await MakeModel.findById(makeId)
+    make.models.splice(make.models.indexOf(model),1);
+    result.make = await make.save();
+  } catch (err) {
+    result.err = err;
+  }
   return result;
 }
 
 const deleteMake = async (id) => {
-  await MakeModel.findByIdAndRemove(id);
+  const result = {};
+  try {
+    await MakeModel.findByIdAndRemove(id);
+  } catch (err) {
+    result.err = err;
+  }
+  return result;
 }
 
 module.exports.createMake = createMake;
