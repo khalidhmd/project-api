@@ -23,79 +23,93 @@ describe('Testing user Repo repo', function() {
       zone: 'zone 1'
     });
     a = await userRepo.createUser(user);
-    assert(a.id == user.id);
-    assert(await bcrypt.compare('password', a.password));
-    id = a.id;
+    assert(a.user.id == user.id);
+    assert(await bcrypt.compare('password', a.user.password));
+    assert(a.err == null);
+    id = a.user.id;
   });
 
   it('Reads user by Id form DB', async function() {
     const b = await userRepo.findUser(id);
-    assert(b.id == id);
+    assert(b.user.id == id);
+    assert(b.err == null);
   });
 
-  it('Signs user in by emai', async function () {
-    const token = await userRepo.signinByEmail('email 1', 'password');
-    const decoded = await jwt.verify(token, 'secret');
+  it('Signs user in by email', async function () {
+    const result = await userRepo.signinByEmail('email 1', 'password');
+    const decoded = await jwt.verify(result.token, 'secret');
     assert(id == decoded.userId);
+    assert(result.err == null);
   });
 
   it('Signs user in by mobile', async function () {
-    const token = await userRepo.signinByMobile('mobile 1', 'password');
-    const decoded = await jwt.verify(token, 'secret');
+    const result = await userRepo.signinByMobile('mobile 1', 'password');
+    const decoded = await jwt.verify(result.token, 'secret');
     assert(id == decoded.userId);
+    assert(result.err == null);
   });
 
-  it('Adds car to user cars in DB', async function () {  
-    carId = [mongoose.Types.ObjectId()]
-    const c = await userRepo.addCar(id, carId);
-    assert(c.cars[0].toString() == carId.toString());
+  it('Adds cars to user cars in DB', async function () {  
+    const carIds = [mongoose.Types.ObjectId(), mongoose.Types.ObjectId()]
+    const c = await userRepo.addCars(id, carIds);
+    assert(c.user.cars[0].toString() == carIds[0].toString());
+    assert(c.err == null);
+    carId = carIds[0];
   });
 
   it('changes photo of user in DB', async function () {  
     const photo = 'changed'
     const c = await userRepo.changePhoto(id, photo);
-    assert(c.photo == photo);
+    assert(c.user.photo == photo);
+    assert(c.err == null);
   });
 
   it('Deletes car from user cars in DB', async function () {
     const d = await userRepo.deleteCar(id, carId);
-    assert(d.cars.length == 0);
+    assert(d.user.cars.length == 1);
+    assert(d.err == null);
   });
   
   it('changes email of user in DB', async function () {  
     const email = 'changed'
     const c = await userRepo.changeEmail(id, email);
-    assert(c.email == email);
+    assert(c.user.email == email);
+    assert(c.err == null);
   });
 
   it('changes mobile of user in DB', async function () {  
     const mobile = 'changed'
     const c = await userRepo.changeMobile(id, mobile);
-    assert(c.mobile == mobile);
+    assert(c.user.mobile == mobile);
+    assert(c.err == null);
   });
 
   it('changes gov of user in DB', async function () {  
     const gov = 'changed'
     const c = await userRepo.changeGov(id, gov);
-    assert(c.gov == gov);
+    assert(c.user.gov == gov);
+    assert(c.err == null);
   });
 
   it('changes display name of user in DB', async function () {  
     const name = 'changed'
     const c = await userRepo.changeName(id, name);
-    assert(c.name == name);
+    assert(c.user.name == name);
+    assert(c.err == null);
   });
 
   it('changes zone of user in DB', async function () {  
     const zone = 'changed'
     const c = await userRepo.changeZone(id, zone);
-    assert(c.zone == zone);
+    assert(c.user.zone == zone);
+    assert(c.err == null);
   });
   
   it('Deletes user from DB', async function () {
-    await userRepo.deleteUser(id);
-    const user = await userRepo.findUser(id);
-    assert(user == null);
+    const r = await userRepo.deleteUser(id);
+    const u = await userRepo.findUser(id);
+    assert(u.user == null);
+    assert(r.err == null);
   });
 });
 
