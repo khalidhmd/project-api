@@ -57,6 +57,7 @@ const deleteComment = async (id) => {
   } catch (err) {
     result.err = err;
   }
+  return result;
 }
 
 
