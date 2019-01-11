@@ -1,19 +1,35 @@
 const ServicelogModel = require('../models/servicelog');
 
-const createServicelog = async (servicelog) => {
-  const result = await ServicelogModel.create(servicelog);
+const createServicelog = async (servicelogs) => {
+  const result = {};
+  try {
+    result.servicelogs = await ServicelogModel.insertMany(servicelogs);
+  } catch (err) {
+    result.err = err;
+  }
   return result;
 }
 
-const findServicelog = async (carId) => {
-  const result = await ServicelogModel.find().where('carid').equals(carId);
+const findServicelogs = async (carId) => {
+  const result = {};
+  try {
+    result.servicelogs = await ServicelogModel.find().where('carid').equals(carId);
+  } catch (err) {
+    result.err = err;
+  }
   return result;
 }
 
 const deleteServicelog = async (id) => {
-  await ServicelogModel.findByIdAndRemove(id);
+  const result = {};
+  try {
+    await ServicelogModel.findByIdAndRemove(id);
+  } catch (err) {
+    result.err = err;
+  }
+  return result;
 }
 
 module.exports.createServicelog = createServicelog;
-module.exports.findServicelog = findServicelog;
+module.exports.findServicelogs = findServicelogs;
 module.exports.deleteServicelog = deleteServicelog;
