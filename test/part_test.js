@@ -12,18 +12,21 @@ describe('Testing partRepo repo', function() {
   it('Saves parts to DB', async function() {
     const part = new PartModel({name:'مارش'});
     const a = await partRepo.createPart(part);
-    assert(a.id == part.id);
-    id = a.id;
+    assert(a.part.id == part.id);
+    assert (a.err == null);
+    id = a.part.id;
   });
 
   it('Reads part form DB', async function() {
     const b = await partRepo.findPart(id);
-    assert(b.id == id);
+    assert(b.part.id == id);
+    assert (b.err == null);
   });
 
   it('Deletes part from DB', async function () {
-    await partRepo.deletePart(id);
-    const part = await partRepo.findPart(id);
-    assert(part == null);
+    const a = await partRepo.deletePart(id);
+    const p = await partRepo.findPart(id);
+    assert(p.part == null);
+    assert (a.err == null);
   });
 });
