@@ -11,34 +11,34 @@ describe('Testing govRepo repo', function() {
 
   it('Saves Governorate to DB', async function() {
     const gov = new GovModel({name:'القاهرة'});
-    const a = await govRepo.createGov(gov);
-    assert(a.gov.id == gov.id);
-    assert(a.err == null);
-    id = a.gov.id;
+    const result = await govRepo.createGov(gov);
+    assert(result.gov.id === gov.id);
+    assert(result.err === null);
+    id = result.gov.id;
   });
 
   it('Reads Governorate form DB', async function() {
-    const b = await govRepo.findGov(id);
-    assert(b.gov.id == id);
-    assert(b.err == null);
+    const result = await govRepo.findGov(id);
+    assert(result.gov.id === id);
+    assert(result.err === null);
   });
   
   it('Adds zone to gov zones in DB', async function () {  
-    const c = await govRepo.addZone(id, 'الأميرية');
-    assert(c.gov.zones[0] == 'الأميرية');
-    assert(c.err == null);
+    const result = await govRepo.addZone(id, 'الأميرية');
+    assert(result.gov.zones[0] === 'الأميرية');
+    assert(result.err === null);
   });
 
   it('Deletes zone from gov zones in DB', async function () {
-    const d = await govRepo.deleteZone(id, "الأميرية");
-    assert(d.gov.zones.length == 0);
-    assert(d.err == null);
+    const result = await govRepo.deleteZone(id, "الأميرية");
+    assert(result.gov.zones.length === 0);
+    assert(result.err === null);
   });
   
   it('Deletes Gov from DB', async function () {
     await govRepo.deleteGov(id);
-    const d = await govRepo.findGov(id);
-    assert(d.gov == null);
-    assert(d.err == null);
+    const result = await govRepo.findGov(id);
+    assert(result.gov === null);
+    assert(result.err === null);
   });
 });

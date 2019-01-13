@@ -11,22 +11,22 @@ describe('Testing service Repo', function() {
 
   it('Saves service to DB', async function() {
     const service = new ServiceModel({name:'تغيير زيت'});
-    const a = await serviceRepo.createService(service);
-    assert(a.service.id == service.id);
-    assert(a.err == null);
-    id = a.service.id;
+    const result = await serviceRepo.createService(service);
+    assert(result.service.id === service.id);
+    assert(result.err === null);
+    id = result.service.id;
   });
 
   it('Reads service form DB', async function() {
-    const b = await serviceRepo.findService(id);
-    assert(b.service.id == id);
-    assert(b.err == null);
+    const result = await serviceRepo.findService(id);
+    assert(result.service.id === id);
+    assert(result.err === null);
   });
 
   it('Deletes service from DB', async function () {
-    const d = await serviceRepo.deleteService(id);
-    const s = await serviceRepo.findService(id);
-    assert(s.service == null);
-    assert(d.err == null);
+    const result = await serviceRepo.deleteService(id);
+    const result1 = await serviceRepo.findService(id);
+    assert(result1.service === null);
+    assert(result.err === null);
   });
 });

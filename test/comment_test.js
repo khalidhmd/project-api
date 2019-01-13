@@ -18,36 +18,36 @@ describe('Testing service log Repo', function() {
       postid: mongoose.Types.ObjectId(),
       userid: mongoose.Types.ObjectId()
     });
-    const a = await commentRepo.createComment(comment);
-    assert(a.comment.id == comment.id);
-    assert(a.err == null);
-    id = a.comment.id;
+    const result = await commentRepo.createComment(comment);
+    assert(result.comment.id === comment.id);
+    assert(result.err === null);
+    id = result.comment.id;
     userid = comment.userid;
     postid = comment.postid;
   });
 
   it('Reads user comments form DB', async function() {
-    const b = await commentRepo.getUserComments(userid);
-    assert(b.comments[0].id == id);
-    assert(b.err == null);
+    const result = await commentRepo.getUserComments(userid);
+    assert(result.comments[0].id === id);
+    assert(result.err === null);
   });
 
   it('Reads post comments form DB', async function() {
-    const b = await commentRepo.getPostComments(postid);
-    assert(b.comments[0].id == id);
-    assert(b.err == null);
+    const result = await commentRepo.getPostComments(postid);
+    assert(result.comments[0].id === id);
+    assert(result.err === null);
   });
 
   it('Reports comments in DB', async function() {
-    const b = await commentRepo.reportComment(id);
-    assert(b.comment.reported == true);
-    assert(b.err == null);
+    const result = await commentRepo.reportComment(id);
+    assert(result.comment.reported === true);
+    assert(result.err === null);
   });
 
   it('Deletes comment from DB', async function () {
     await commentRepo.deleteComment(id);
-    const d = await commentRepo.getComment(id);
-    assert(d.comment == null);
-    assert(d.err == null);
+    const result = await commentRepo.getComment(id);
+    assert(result.comment === null);
+    assert(result.err === null);
   });
 });

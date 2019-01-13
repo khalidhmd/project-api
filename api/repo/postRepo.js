@@ -4,6 +4,7 @@ const createPost = async (post) => {
   const result = {};
   try {
     result.post = await PostModel.create(post);
+    result.err = null;
   } catch (err) {
     result.err = err;
   }
@@ -14,6 +15,7 @@ const findPost = async (id) => {
   const result = {};
   try {
     result.post = await PostModel.findById(id);
+    result.err = null;
   } catch (err) {
     result.err = err;
   }
@@ -24,6 +26,7 @@ const getUserPosts = async (userId) => {
   const result = {};
   try {
     result.posts = await PostModel.find().where('userid').equals(userId);
+    result.err = null;
   } catch (err) {
     result.err = err;
   }
@@ -36,6 +39,7 @@ const addComment = async (postId, commentId) => {
     result.post = await PostModel.findByIdAndUpdate(postId, {
       $push: {comments: commentId}
     }, { new: true});
+    result.err = null;
   } catch (err) {
     result.err = err;
   }
@@ -48,6 +52,7 @@ const addPhoto = async (postId, photoPath) => {
     result.post = await PostModel.findByIdAndUpdate(postId, {
       $push: {photos: photoPath}
     }, { new: true });
+    result.err = null;
   } catch (err) {
     result.err = err;
   }
@@ -60,6 +65,7 @@ const deleteComment = async (postId, commentId) => {
     result.post = await PostModel.findByIdAndUpdate(postId, {
       $pull: {comments: commentId}
     }, { new: true});
+    result.err = null;
   } catch (err) {
     result.err = err;
   }
@@ -72,6 +78,7 @@ const deletePhoto = async (postId, photoPath) => {
     result.post = await PostModel.findByIdAndUpdate(postId, {
       $pull: {photos: photoPath}
     }, { new: true });
+    result.err = null;
   } catch (err) {
     result.err = err;
   }
@@ -82,6 +89,7 @@ const reportPost = async (id) => {
   const result = {};
   try {
     result.post = await PostModel.findByIdAndUpdate(id, { reported: true}, { new: true });
+    result.err = null;
   } catch (err) {
     result.err = err;
   }
@@ -92,6 +100,7 @@ const setSold = async (id) => {
   const result = {};
   try {
     result.post = await PostModel.findByIdAndUpdate(id, { sold: true}, { new: true });
+    result.err = null;
   } catch (err) {
     result.err = err;
   }
@@ -102,6 +111,7 @@ const deletePost = async (id) => {
   const result = {};
   try {
     await PostModel.findByIdAndRemove(id);
+    result.err = null;
   } catch (err) {
     result.err = err;
   }

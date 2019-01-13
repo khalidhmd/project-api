@@ -7,6 +7,7 @@ const createUser = async (user) => {
   try {
     user.password = await bcrypt.hash(user.password, 10);
     result.user = await UserModel.create(user);
+    result.err = null;
   } catch (err) {
     result.err = err;
   }
@@ -17,6 +18,7 @@ const findUser = async (id) => {
   const result = {};
   try {
     result.user = await UserModel.findById(id);
+    result.err = null;
   } catch (err) {
     result.err = err;
   }
@@ -31,6 +33,7 @@ const signinByEmail = async (email, password) => {
       const checked = await bcrypt.compare(password, user.password);
       if(checked) {
         result.token = jwt.sign({userId: user.id},'secret', {expiresIn: '7d'});
+        result.err = null;
       } 
     }
   } catch (err) {
@@ -47,6 +50,7 @@ const signinByMobile = async (mobile, password) => {
       const checked = await bcrypt.compare(password,user.password)
       if(checked) {
         result.token = jwt.sign({userId: user.id},'secret', {expiresIn: '7d'});
+        result.err = null;
       }
     }
   } catch (err) {
@@ -59,6 +63,7 @@ const changePhoto = async (userId, photoPath) => {
   const result = {};
   try {
     result.user = await UserModel.findByIdAndUpdate(userId, { photo: photoPath }, { new: true });
+    result.err = null;
   } catch (err) {
     result.err = err;
   }
@@ -69,6 +74,7 @@ const changeEmail = async (userId, email) => {
   const result = {};
   try {
     result.user = await UserModel.findByIdAndUpdate(userId, { email: email }, { new: true });
+    result.err = null;
   } catch (err) {
     result.err = err;
   }
@@ -79,6 +85,7 @@ const changeMobile = async (userId, mobile) => {
   const result = {};
   try {
     result.user = await UserModel.findByIdAndUpdate(userId, { mobile: mobile }, { new: true });
+    result.err = null;
   } catch (err) {
     result.err = err;
   }
@@ -89,6 +96,7 @@ const changeGov = async (userId, gov) => {
   const result = {};
   try {
     result.user = await UserModel.findByIdAndUpdate(userId, { gov: gov }, { new: true });
+    result.err = null;
   } catch (err) {
     result.err = err;
   }
@@ -99,6 +107,7 @@ const changeZone = async (userId, zone) => {
   const result = {};
   try {
     result.user = await UserModel.findByIdAndUpdate(userId, { zone: zone }, { new: true });
+    result.err = null;
   } catch (err) {
     result.err;
   }
@@ -109,6 +118,7 @@ const changeName = async (userId, name) => {
   const result = {};
   try {
     result.user = await UserModel.findByIdAndUpdate(userId, { name: name }, { new: true });
+    result.err = null;
   } catch (err) {
     result.err = err;
   }
@@ -120,7 +130,8 @@ const addCars = async (userId, carIds) => {
   try {
     result.user = await UserModel.findByIdAndUpdate(userId, {
       $addToSet: {cars: {$each: carIds}}
-    }, { new: true})
+    }, { new: true});
+    result.err = null;
   } catch (err) {
     result.err = err;
   }
@@ -133,6 +144,7 @@ const deleteCar = async (userId, carId) => {
     result.user = await UserModel.findByIdAndUpdate(userId, {
       $pull: {cars: carId}
     }, { new: true });
+    result.err = null;
   } catch (err) {
     result.err = err;
   }
@@ -143,6 +155,7 @@ const deleteUser = async (id) => {
   const result = {};
   try {
     await UserModel.findByIdAndRemove(id);
+    result.err = null;
   } catch (err) {
     result.err = err;
   }

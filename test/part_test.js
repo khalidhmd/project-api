@@ -11,22 +11,22 @@ describe('Testing partRepo repo', function() {
 
   it('Saves parts to DB', async function() {
     const part = new PartModel({name:'مارش'});
-    const a = await partRepo.createPart(part);
-    assert(a.part.id == part.id);
-    assert (a.err == null);
-    id = a.part.id;
+    const result = await partRepo.createPart(part);
+    assert(result.part.id === part.id);
+    assert (result.err === null);
+    id = result.part.id;
   });
 
   it('Reads part form DB', async function() {
-    const b = await partRepo.findPart(id);
-    assert(b.part.id == id);
-    assert (b.err == null);
+    const result = await partRepo.findPart(id);
+    assert(result.part.id === id);
+    assert (result.err === null);
   });
 
   it('Deletes part from DB', async function () {
-    const a = await partRepo.deletePart(id);
-    const p = await partRepo.findPart(id);
-    assert(p.part == null);
-    assert (a.err == null);
+    const result = await partRepo.deletePart(id);
+    const result1 = await partRepo.findPart(id);
+    assert(result1.part === null);
+    assert(result.err === null);
   });
 });

@@ -11,36 +11,36 @@ describe('Testing makeRepo repo', function() {
 
   it('Saves car make to DB', async function() {
     const make = new MakeModel({name:'Hundai', logo: 'logoPath'});
-    const a = await makeRepo.createMake(make);
-    assert(a.make.id == make.id);
-    assert(a.err == null);
-    id = a.make.id;
+    const result = await makeRepo.createMake(make);
+    assert(result.make.id === make.id);
+    assert(result.err === null);
+    id = result.make.id;
   });
 
   it('Reads car make form DB', async function() {
-    const b = await makeRepo.findMake(id);
-    assert(b.make.id == id);
-    assert(b.err == null);
+    const result = await makeRepo.findMake(id);
+    assert(result.make.id === id);
+    assert(result.err === null);
   });
   
   it('Adds model to make-models in DB', async function () {  
-    const c = await makeRepo.addModel(id, [{name: 'Verna', logo: 'logoPath'}]);
-    assert(c.make.models[0].name == 'Verna');
-    assert(c.make.models[0].logo == 'logoPath');
-    assert(c.err == null);
+    const result = await makeRepo.addModel(id, [{name: 'Verna', logo: 'logoPath'}]);
+    assert(result.make.models[0].name === 'Verna');
+    assert(result.make.models[0].logo === 'logoPath');
+    assert(result.err === null);
   });
 
   it('Deletes model from make-models in DB', async function () {
-    const d = await makeRepo.deleteModel(id, "Verna");
-    assert(d.make.models.length == 0);
-    assert(d.err == null);
+    const result = await makeRepo.deleteModel(id, "Verna");
+    assert(result.make.models.length === 0);
+    assert(result.err === null);
   });
   
   it('Deletes car make from DB', async function () {
     const result = await makeRepo.deleteMake(id);
-    const m = await makeRepo.findMake(id);
-    assert(m.make == null);
-    assert(result.err == null);
+    const result1 = await makeRepo.findMake(id);
+    assert(result1.make === null);
+    assert(result.err === null);
   });
 });
 

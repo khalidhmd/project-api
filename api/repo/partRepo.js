@@ -4,6 +4,7 @@ const createPart = async (part) => {
   const result = {};
   try {
     result.part = await PartModel.create(part);
+    result.err = null;
   } catch (err) {
     result.err = err;
   }
@@ -14,6 +15,7 @@ const findPart = async (id) => {
   const result = {};
   try {
     result.part = await PartModel.findById(id);
+    result.err = null;
   } catch (err) {
     result.err = err;
   }
@@ -24,6 +26,7 @@ const deletePart = async (id) => {
   const result = {};
   try {
     await PartModel.findByIdAndRemove(id);
+    result.err = null;
   } catch (err) {
     result.err = err;
   }

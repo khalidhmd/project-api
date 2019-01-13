@@ -4,6 +4,7 @@ const craeteCar = async (car) => {
   const result = {};
   try {
     result.car = await CarModel.create(car);
+    result.err = null;
   } catch (err) {
     result.err = err;
   }
@@ -14,6 +15,7 @@ const findCar = async (id) => {
   const result = {};
   try {
     result.car = await CarModel.findById(id);
+    result.err = null;
   } catch (err) {
     result.err = err;
   }
@@ -26,6 +28,7 @@ const addServicedefault = async (carId, servicedefaults) => {
     result.car = await CarModel.findByIdAndUpdate(carId, {
       $addToSet: { servicedefaults: { $each: servicedefaults }}
     }, { new: true });
+    result.err = null;
   } catch (err) {
     result.err = err;
   }
@@ -39,6 +42,7 @@ const deleteServicedefault = async (carId, servicename) => {
     let servicedefaults = car.servicedefaults.filter( obj => obj.name != servicename);
     car.servicedefaults = servicedefaults;
     result.car = await car.save();
+    result.err = null;
   } catch (err) {
     result.err = err;
   }
@@ -51,6 +55,7 @@ const addServicestatus = async (carId, servicestatuses) => {
     result.car = await CarModel.findByIdAndUpdate(carId, {
       $addToSet: { servicestatuses: { $each: servicestatuses }}
     }, { new: true });
+    result.err = null;
   } catch (err) {
     result.err = err;
   }
@@ -61,6 +66,7 @@ const updateCarkm = async (carId, value) => {
   const result = {};
   try {
     result.car = await CarModel.findByIdAndUpdate(carId,{ km: value }, { new: true });
+    result.err = null;
   } catch (err) {
     result.err = err;
   }
@@ -74,6 +80,7 @@ const deleteServicestatus = async (carId, servicename) => {
     let servicestatuses = car.servicestatuses.filter( obj => obj.name != servicename);
     car.servicestatuses = servicestatuses;
     result.car = await car.save();
+    result.err = null;
   } catch (err) {
     result.err = err;
   }
@@ -84,6 +91,7 @@ const deleteCar = async (id) => {
   const result = {};
   try {
     await CarModel.findByIdAndRemove(id);
+    result.err = null;
   } catch (err) {
     result.err = err;
   }

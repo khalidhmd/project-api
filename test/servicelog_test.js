@@ -16,24 +16,24 @@ describe('Testing service log Repo', function() {
     const carId = new mongoose.Types.ObjectId();
     servicelogs.push(new ServicelogModel({name:'تغيير زيت', carid: carId }));
     servicelogs.push(new ServicelogModel({name:'دورة تبريد', carid: carId }));
-    const a = await servicelogRepo.createServicelog(servicelogs);
-    assert(a.servicelogs[0].id == servicelogs[0].id);
-    assert(a.servicelogs.length == 2);
-    assert(a.err == null);
-    logs = a.servicelogs;
+    const result = await servicelogRepo.createServicelog(servicelogs);
+    assert(result.servicelogs[0].id === servicelogs[0].id);
+    assert(result.servicelogs.length === 2);
+    assert(result.err === null);
+    logs = result.servicelogs;
     carid = carId;
   });
 
   it('Reads service log form DB', async function() {
-    const b = await servicelogRepo.findServicelogs(carid);
-    assert(b.servicelogs[0].id == logs[0].id);
-    assert(b.err == null);
+    const result = await servicelogRepo.findServicelogs(carid);
+    assert(result.servicelogs[0].id === logs[0].id);
+    assert(result.err === null);
   });
 
   it('Deletes service log from DB', async function () {
     const result = await servicelogRepo.deleteServicelog(logs[0].id);
-    const r = await servicelogRepo.findServicelogs(carid);
-    assert(r.servicelogs.length == 1);
-    assert(result.err == null);
+    const result1 = await servicelogRepo.findServicelogs(carid);
+    assert(result1.servicelogs.length === 1);
+    assert(result.err === null);
   });
 });
