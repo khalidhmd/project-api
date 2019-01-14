@@ -1,4 +1,4 @@
-const assert = require('assert');
+const assert = require('chai').assert;
 const CommentModel = require('../api/models/comment');
 const commentRepo = require('../api/repo/commentRepo');
 const mongoose = require('mongoose')
@@ -19,8 +19,8 @@ describe('Testing service log Repo', function() {
       userid: mongoose.Types.ObjectId()
     });
     const result = await commentRepo.createComment(comment);
-    assert(result.comment.id === comment.id);
-    assert(result.err === null);
+    assert.strictEqual(result.comment.id, comment.id);
+    assert.isNull(result.err);
     id = result.comment.id;
     userid = comment.userid;
     postid = comment.postid;
@@ -28,26 +28,26 @@ describe('Testing service log Repo', function() {
 
   it('Reads user comments form DB', async function() {
     const result = await commentRepo.getUserComments(userid);
-    assert(result.comments[0].id === id);
-    assert(result.err === null);
+    assert.strictEqual(result.comments[0].id, id);
+    assert.isNull(result.err);
   });
 
   it('Reads post comments form DB', async function() {
     const result = await commentRepo.getPostComments(postid);
-    assert(result.comments[0].id === id);
-    assert(result.err === null);
+    assert(result.comments[0].id, id);
+    assert.isNull(result.err);
   });
 
   it('Reports comments in DB', async function() {
     const result = await commentRepo.reportComment(id);
-    assert(result.comment.reported === true);
-    assert(result.err === null);
+    assert.strictEqual(result.comment.reported, true);
+    assert.isNull(result.err);
   });
 
   it('Deletes comment from DB', async function () {
     await commentRepo.deleteComment(id);
     const result = await commentRepo.getComment(id);
-    assert(result.comment === null);
-    assert(result.err === null);
+    assert.isNull(result.comment);
+    assert.isNull(result.err);
   });
 });

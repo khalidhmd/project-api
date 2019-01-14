@@ -1,4 +1,4 @@
-const assert = require('assert');
+const assert = require('chai').assert;
 const ServiceModel = require('../api/models/service');
 var serviceRepo = require('../api/repo/serviceRepo');
 
@@ -12,21 +12,21 @@ describe('Testing service Repo', function() {
   it('Saves service to DB', async function() {
     const service = new ServiceModel({name:'تغيير زيت'});
     const result = await serviceRepo.createService(service);
-    assert(result.service.id === service.id);
-    assert(result.err === null);
+    assert.strictEqual(result.service.id, service.id);
+    assert.isNull(result.err);
     id = result.service.id;
   });
 
   it('Reads service form DB', async function() {
     const result = await serviceRepo.findService(id);
-    assert(result.service.id === id);
-    assert(result.err === null);
+    assert.strictEqual(result.service.id, id);
+    assert.isNull(result.err);
   });
 
   it('Deletes service from DB', async function () {
     const result = await serviceRepo.deleteService(id);
     const result1 = await serviceRepo.findService(id);
-    assert(result1.service === null);
-    assert(result.err === null);
+    assert.isNull(result1.service);
+    assert.isNull(result.err);
   });
 });

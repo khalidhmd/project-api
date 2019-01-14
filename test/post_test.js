@@ -1,4 +1,4 @@
-const assert = require('assert');
+const assert = require('chai').assert;
 const PostModel = require('../api/models/post');
 var postRepo = require('../api/repo/postRepo');
 const mongoose = require('mongoose');
@@ -23,68 +23,68 @@ describe('Testing post Repo repo', function() {
       userid: mongoose.Types.ObjectId()
     });
     const result = await postRepo.createPost(post);
-    assert(result.post.id === post.id);
-    assert(result.err === null);
+    assert.strictEqual(result.post.id, post.id);
+    assert.isNull(result.err);
     id = result.post.id;
     userId = post.userid
   });
 
   it('Reads user post by post Id form DB', async function() {
     const result = await postRepo.findPost(id);
-    assert(result.post.id === id);
-    assert(result.err === null);
+    assert.strictEqual(result.post.id, id);
+    assert.isNull(result.err);
   });
 
   it('Reads user posts by user Id form DB', async function() {
     const result = await postRepo.getUserPosts(userId);
-    assert(result.posts[0].id === id);
-    assert(result.posts[0].userid.toString() === userId.toString());
-    assert(result.err === null);
+    assert.strictEqual(result.posts[0].id, id);
+    assert.strictEqual(result.posts[0].userid.toString(), userId.toString());
+    assert.isNull(result.err);
   });
   
   it('Adds comment to user post in DB', async function () {  
     commentId = mongoose.Types.ObjectId()
     const result = await postRepo.addComment(id, commentId);
-    assert(result.post.comments[0].toString() === commentId.toString());
-    assert(result.err === null);
+    assert.strictEqual(result.post.comments[0].toString(), commentId.toString());
+    assert.isNull(result.err);
   });
 
   it('Adds photo to user post in DB', async function () {  
     const photo = 'photo path'
     const result = await postRepo.addPhoto(id, photo);
-    assert(result.post.photos[0] === photo);
-    assert( result.err === null);
+    assert.strictEqual(result.post.photos[0], photo);
+    assert.isNull(result.err);
   });
 
   it('Deletes comment from user post in DB', async function () {
     const result = await postRepo.deleteComment(id, commentId);
-    assert(result.post.comments.length === 0);
-    assert(result.err === null);
+    assert.strictEqual(result.post.comments.length, 0);
+    assert.isNull(result.err);
   });
 
   it('Deletes photo from user post in DB', async function () {
     const result = await postRepo.deletePhoto(id, photo);
-    assert(result.post.comments.length === 0);
-    assert(result.err === null);
+    assert.strictEqual(result.post.comments.length, 0);
+    assert.isNull(result.err);
   });
 
   it('Reports user post in DB', async function() {
     const result = await postRepo.reportPost(id);
-    assert(result.post.reported === true);
-    assert(result.err === null);
+    assert.isTrue(result.post.reported);
+    assert.isNull(result.err);
   });
 
   it('Sets item as sold in DB', async function() {
     const result = await postRepo.setSold(id);
-    assert(result.post.sold === true);
-    assert(result.err === null);
+    assert.isTrue(result.post.sold);
+    assert.isNull(result.err);
   });
   
   it('Deletes user post from DB', async function () {
     const result = await postRepo.deletePost(id);
     const result1 = await postRepo.findPost(id);
-    assert(result1.post === null);
-    assert(result.err === null);
+    assert.isNull(result1.post);
+    assert.isNull(result.err);
   });
 });
 
