@@ -1,4 +1,4 @@
-const { DefaultModel } = require("../models/servicedefalt");
+const { DefaultModel } = require("../models/servicedefault");
 
 const createDefault = async serviceDefault => {
   const result = {};

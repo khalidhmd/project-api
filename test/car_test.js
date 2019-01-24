@@ -1,12 +1,16 @@
 const assert = require("chai").assert;
 const CarModel = require("../api/models/car");
-var carRepo = require("../api/repo/carRepo");
+const carRepo = require("../api/repo/carRepo");
+const statusRepo = require("../api/repo/statusRepo");
+const defaultRepo = require("../api/repo/defaultRepo");
 
 describe("Testing car Repo repo", function() {
   let id;
 
   before(async function() {
     await CarModel.deleteMany();
+    await statusRepo.createStatus({ name: "تغيير زيت", nextkm: 20 });
+    await defaultRepo.createDefault({ name: "تغيير زيت" });
   });
 
   it("Saves user car to DB", async function() {
@@ -14,6 +18,8 @@ describe("Testing car Repo repo", function() {
     const result = await carRepo.createCar(car);
     assert.isNull(result.err);
     assert.strictEqual(result.car.id, car.id);
+    assert.lengthOf(result.car.servicedefaults, 1);
+    assert.lengthOf(result.car.servicestatuses, 1);
     id = result.car.id;
   });
 
@@ -31,34 +37,34 @@ describe("Testing car Repo repo", function() {
 
   it("Adds servicedefaults to user car in DB", async function() {
     const result = await carRepo.addServicedefault(id, [
-      { name: "تغيير زيت" },
+      { name: "تغيير تيل فرامل" },
       { name: "تغيير دورة تبريد" }
     ]);
-    assert.strictEqual(result.car.servicedefaults[0].name, "تغيير زيت");
-    assert.strictEqual(result.car.servicedefaults[0].km, 10);
-    assert.lengthOf(result.car.servicedefaults, 2);
+    assert.strictEqual(result.car.servicedefaults[2].name, "تغيير دورة تبريد");
+    assert.strictEqual(result.car.servicedefaults[2].km, 10);
+    assert.lengthOf(result.car.servicedefaults, 3);
     assert.isNull(result.err);
   });
 
   it("Deletes servicedefault from user car in DB", async function() {
     const result = await carRepo.deleteServicedefault(id, "تغيير زيت");
-    assert.lengthOf(result.car.servicedefaults, 1);
+    assert.lengthOf(result.car.servicedefaults, 2);
     assert.isNull(result.err);
   });
 
   it("Adds servicestatus to user car in DB", async function() {
     const result = await carRepo.addServicestatus(id, [
-      { name: "تغيير زيت", nextkm: 20 }
+      { name: "تغيير دورة تبريد", nextkm: 20 }
     ]);
-    assert.strictEqual(result.car.servicestatuses[0].name, "تغيير زيت");
-    assert(result.car.servicestatuses[0].nextkm, 20);
-    assert.lengthOf(result.car.servicestatuses, 1);
+    assert.strictEqual(result.car.servicestatuses[1].name, "تغيير دورة تبريد");
+    assert(result.car.servicestatuses[1].nextkm, 20);
+    assert.lengthOf(result.car.servicestatuses, 2);
     assert.isNull(result.err);
   });
 
   it("Deletes servicestatus from user car in DB", async function() {
     const result = await carRepo.deleteServicestatus(id, "تغيير زيت");
-    assert.lengthOf(result.car.servicestatuses, 0);
+    assert.lengthOf(result.car.servicestatuses, 1);
     assert.isNull(result.err);
   });
 
