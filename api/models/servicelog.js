@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 
 const servicelogSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  date: { type: Date, default: Date.now() },
-  prevdate: { type: Date, default: Date.now() },
+  date: { type: Date, default: new Date() },
+  prevdate: { type: Date, default: new Date() },
   partprice: Number,
   serviceprice: Number,
   notes: String,

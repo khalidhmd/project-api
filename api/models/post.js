@@ -12,7 +12,7 @@ const postSchema = new mongoose.Schema({
   body: { type: String, required: true},
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'comment' }],
   price: Number,
-  date: Date,
+  date: {type: Date, default: new Date()},
   userid: { type: mongoose.Schema.Types.ObjectId, ref: 'user' }
 });
 
