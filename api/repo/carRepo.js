@@ -1,8 +1,9 @@
 const CarModel = require("../models/car");
 const { DefaultModel } = require("../models/servicedefault");
 const { StatusModel } = require("../models/servicestatus");
+const userRepo = require("./userRepo");
 
-const createCar = async car => {
+const createCar = async (car, userId) => {
   const result = {};
   try {
     const defaults = await DefaultModel.find();
@@ -10,7 +11,8 @@ const createCar = async car => {
     car.servicedefaults = defaults;
     car.servicestatuses = statuses;
     result.car = await CarModel.create(car);
-    console.log(result.car);
+    const { user } = await userRepo.addCars(userId, [result.car.id]);
+    result.cars = user.cars;
     result.err = null;
   } catch (err) {
     result.err = err;

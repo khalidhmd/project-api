@@ -3,23 +3,34 @@ const CarModel = require("../api/models/car");
 const carRepo = require("../api/repo/carRepo");
 const statusRepo = require("../api/repo/statusRepo");
 const defaultRepo = require("../api/repo/defaultRepo");
+const userRepo = require("../api/repo/userRepo");
 
 describe("Testing car Repo repo", function() {
-  let id;
+  let id, userId;
 
   before(async function() {
     await CarModel.deleteMany();
     await statusRepo.createStatus({ name: "تغيير زيت", nextkm: 20 });
     await defaultRepo.createDefault({ name: "تغيير زيت" });
+    const { user } = await userRepo.createUser({
+      name: "user 1",
+      password: "password",
+      email: "email 1",
+      mobile: "mobile 1",
+      gov: "gov 1",
+      zone: "zone 1"
+    });
+    userId = user.id;
   });
 
   it("Saves user car to DB", async function() {
     const car = new CarModel({ make: "Hundai", model: "Verna" });
-    const result = await carRepo.createCar(car);
+    const result = await carRepo.createCar(car, userId);
     assert.isNull(result.err);
     assert.strictEqual(result.car.id, car.id);
     assert.lengthOf(result.car.servicedefaults, 1);
     assert.lengthOf(result.car.servicestatuses, 1);
+    assert.lengthOf(result.cars, 1);
     id = result.car.id;
   });
 
