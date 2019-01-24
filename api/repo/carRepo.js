@@ -1,6 +1,6 @@
-const CarModel = require('../models/car');
+const CarModel = require("../models/car");
 
-const craeteCar = async (car) => {
+const createCar = async car => {
   const result = {};
   try {
     result.car = await CarModel.create(car);
@@ -9,9 +9,9 @@ const craeteCar = async (car) => {
     result.err = err;
   }
   return result;
-}
+};
 
-const findCar = async (id) => {
+const findCar = async id => {
   const result = {};
   try {
     result.car = await CarModel.findById(id);
@@ -20,26 +20,32 @@ const findCar = async (id) => {
     result.err = err;
   }
   return result;
-}
+};
 
 const addServicedefault = async (carId, servicedefaults) => {
   const result = {};
   try {
-    result.car = await CarModel.findByIdAndUpdate(carId, {
-      $addToSet: { servicedefaults: { $each: servicedefaults }}
-    }, { new: true });
+    result.car = await CarModel.findByIdAndUpdate(
+      carId,
+      {
+        $addToSet: { servicedefaults: { $each: servicedefaults } }
+      },
+      { new: true }
+    );
     result.err = null;
   } catch (err) {
     result.err = err;
   }
   return result;
-}
+};
 
 const deleteServicedefault = async (carId, servicename) => {
   const result = {};
   try {
-    const car = await CarModel.findById(carId)
-    let servicedefaults = car.servicedefaults.filter( obj => obj.name != servicename);
+    const car = await CarModel.findById(carId);
+    let servicedefaults = car.servicedefaults.filter(
+      obj => obj.name != servicename
+    );
     car.servicedefaults = servicedefaults;
     result.car = await car.save();
     result.err = null;
@@ -47,37 +53,47 @@ const deleteServicedefault = async (carId, servicename) => {
     result.err = err;
   }
   return result;
-}
+};
 
 const addServicestatus = async (carId, servicestatuses) => {
   const result = {};
   try {
-    result.car = await CarModel.findByIdAndUpdate(carId, {
-      $addToSet: { servicestatuses: { $each: servicestatuses }}
-    }, { new: true });
+    result.car = await CarModel.findByIdAndUpdate(
+      carId,
+      {
+        $addToSet: { servicestatuses: { $each: servicestatuses } }
+      },
+      { new: true }
+    );
     result.err = null;
   } catch (err) {
     result.err = err;
   }
   return result;
-}
+};
 
 const updateCarkm = async (carId, value) => {
   const result = {};
   try {
-    result.car = await CarModel.findByIdAndUpdate(carId,{ km: value }, { new: true });
+    result.car = await CarModel.findByIdAndUpdate(
+      carId,
+      { km: value },
+      { new: true }
+    );
     result.err = null;
   } catch (err) {
     result.err = err;
   }
   return result;
-}
+};
 
 const deleteServicestatus = async (carId, servicename) => {
   const result = {};
   try {
-    const car = await CarModel.findById(carId)
-    let servicestatuses = car.servicestatuses.filter( obj => obj.name != servicename);
+    const car = await CarModel.findById(carId);
+    let servicestatuses = car.servicestatuses.filter(
+      obj => obj.name != servicename
+    );
     car.servicestatuses = servicestatuses;
     result.car = await car.save();
     result.err = null;
@@ -85,9 +101,9 @@ const deleteServicestatus = async (carId, servicename) => {
     result.err = err;
   }
   return result;
-}
+};
 
-const deleteCar = async (id) => {
+const deleteCar = async id => {
   const result = {};
   try {
     await CarModel.findByIdAndRemove(id);
@@ -95,9 +111,9 @@ const deleteCar = async (id) => {
   } catch (err) {
     result.err = err;
   }
-}
+};
 
-module.exports.craeteCar = craeteCar;
+module.exports.createCar = createCar;
 module.exports.findCar = findCar;
 module.exports.addServicedefault = addServicedefault;
 module.exports.deleteServicedefault = deleteServicedefault;
