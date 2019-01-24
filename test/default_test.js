@@ -9,7 +9,7 @@ describe("Testing default Repo", function() {
     await DefaultModel.deleteMany();
   });
 
-  it("Saves default service to DB", async function() {
+  it("Saves service default to DB", async function() {
     const serviceDefault = new DefaultModel({ name: "تغيير زيت" });
     const result = await defaultRepo.createDefault(serviceDefault);
     assert.strictEqual(result.serviceDefault.id, serviceDefault.id);
