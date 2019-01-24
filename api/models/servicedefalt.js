@@ -1,10 +1,13 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const servicedefaultSchema = new mongoose.Schema({
-  name: String, 
-  km: {type: Number, default: 10},
-  months: {type: Number, default: 12}
+  name: String,
+  km: { type: Number, default: 10 },
+  months: { type: Number, default: 12 }
 });
 
-module.exports.ServicedefaultModel = mongoose.model('servicedefault', servicedefaultSchema);
-module.exports.servicedefaultSchema = servicedefaultSchema
+module.exports.DefaultModel = mongoose.model(
+  "servicedefault",
+  servicedefaultSchema
+);
+module.exports.servicedefaultSchema = servicedefaultSchema;
