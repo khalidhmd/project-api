@@ -11,7 +11,7 @@ const createCar = async (car, userId) => {
     car.servicedefaults = defaults;
     car.servicestatuses = statuses;
     result.car = await CarModel.create(car);
-    const { user } = await userRepo.addCars(userId, [result.car.id]);
+    const { user } = await userRepo.addCar(userId, result.car.id);
     result.cars = user.cars;
     result.err = null;
   } catch (err) {
