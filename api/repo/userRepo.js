@@ -2,7 +2,7 @@ const UserModel = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const createUser = async user => {
+module.exports.createUser = async user => {
   const result = {};
   try {
     user.password = await bcrypt.hash(user.password, 10);
@@ -14,7 +14,7 @@ const createUser = async user => {
   return result;
 };
 
-const findUser = async id => {
+module.exports.findUser = async id => {
   const result = {};
   try {
     result.user = await UserModel.findById(id);
@@ -25,7 +25,7 @@ const findUser = async id => {
   return result;
 };
 
-const signinByEmail = async (email, password) => {
+module.exports.signinByEmail = async (email, password) => {
   const result = {};
   try {
     const user = await UserModel.findOne()
@@ -46,7 +46,7 @@ const signinByEmail = async (email, password) => {
   return result;
 };
 
-const signinByMobile = async (mobile, password) => {
+module.exports.signinByMobile = async (mobile, password) => {
   const result = {};
   try {
     const user = await UserModel.findOne()
@@ -67,7 +67,7 @@ const signinByMobile = async (mobile, password) => {
   return result;
 };
 
-const changePhoto = async (userId, photoPath) => {
+module.exports.changePhoto = async (userId, photoPath) => {
   const result = {};
   try {
     result.user = await UserModel.findByIdAndUpdate(
@@ -82,7 +82,7 @@ const changePhoto = async (userId, photoPath) => {
   return result;
 };
 
-const changeEmail = async (userId, email) => {
+module.exports.changeEmail = async (userId, email) => {
   const result = {};
   try {
     result.user = await UserModel.findByIdAndUpdate(
@@ -97,7 +97,7 @@ const changeEmail = async (userId, email) => {
   return result;
 };
 
-const changeMobile = async (userId, mobile) => {
+module.exports.changeMobile = async (userId, mobile) => {
   const result = {};
   try {
     result.user = await UserModel.findByIdAndUpdate(
@@ -112,7 +112,7 @@ const changeMobile = async (userId, mobile) => {
   return result;
 };
 
-const changeGov = async (userId, gov) => {
+module.exports.changeGov = async (userId, gov) => {
   const result = {};
   try {
     result.user = await UserModel.findByIdAndUpdate(
@@ -127,7 +127,7 @@ const changeGov = async (userId, gov) => {
   return result;
 };
 
-const changeZone = async (userId, zone) => {
+module.exports.changeZone = async (userId, zone) => {
   const result = {};
   try {
     result.user = await UserModel.findByIdAndUpdate(
@@ -142,7 +142,7 @@ const changeZone = async (userId, zone) => {
   return result;
 };
 
-const changeName = async (userId, name) => {
+module.exports.changeName = async (userId, name) => {
   const result = {};
   try {
     result.user = await UserModel.findByIdAndUpdate(
@@ -157,7 +157,7 @@ const changeName = async (userId, name) => {
   return result;
 };
 
-const addCar = async (userId, carId) => {
+module.exports.addCar = async (userId, carId) => {
   const result = {};
   try {
     result.user = await UserModel.findByIdAndUpdate(
@@ -174,7 +174,7 @@ const addCar = async (userId, carId) => {
   return result;
 };
 
-const addPost = async (userId, postId) => {
+module.exports.addPost = async (userId, postId) => {
   const result = {};
   try {
     result.user = await UserModel.findByIdAndUpdate(
@@ -191,7 +191,7 @@ const addPost = async (userId, postId) => {
   return result;
 };
 
-const deleteCar = async (userId, carId) => {
+module.exports.deleteCar = async (userId, carId) => {
   const result = {};
   try {
     result.user = await UserModel.findByIdAndUpdate(
@@ -208,7 +208,7 @@ const deleteCar = async (userId, carId) => {
   return result;
 };
 
-const deletePost = async (userId, postId) => {
+module.exports.deletePost = async (userId, postId) => {
   const result = {};
   try {
     result.user = await UserModel.findByIdAndUpdate(
@@ -225,7 +225,7 @@ const deletePost = async (userId, postId) => {
   return result;
 };
 
-const deleteUser = async id => {
+module.exports.deleteUser = async id => {
   const result = {};
   try {
     await UserModel.findByIdAndRemove(id);
@@ -235,19 +235,3 @@ const deleteUser = async id => {
   }
   return result;
 };
-
-module.exports.createUser = createUser;
-module.exports.findUser = findUser;
-module.exports.changePhoto = changePhoto;
-module.exports.changeEmail = changeEmail;
-module.exports.changeMobile = changeMobile;
-module.exports.changeGov = changeGov;
-module.exports.changeZone = changeZone;
-module.exports.changeName = changeName;
-module.exports.deleteUser = deleteUser;
-module.exports.addCar = addCar;
-module.exports.addPost = addPost;
-module.exports.deleteCar = deleteCar;
-module.exports.deletePost = deletePost;
-module.exports.signinByEmail = signinByEmail;
-module.exports.signinByMobile = signinByMobile;

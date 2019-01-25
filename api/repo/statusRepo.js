@@ -1,6 +1,6 @@
 const { StatusModel } = require("../models/servicestatus");
 
-const createStatus = async serviceStatus => {
+module.exports.createStatus = async serviceStatus => {
   const result = {};
   try {
     result.serviceStatus = await StatusModel.create(serviceStatus);
@@ -11,7 +11,7 @@ const createStatus = async serviceStatus => {
   return result;
 };
 
-const findStatus = async id => {
+module.exports.findStatus = async id => {
   const result = {};
   try {
     result.serviceStatus = await StatusModel.findById(id);
@@ -22,7 +22,7 @@ const findStatus = async id => {
   return result;
 };
 
-const updateStatus = async serviceStatus => {
+module.exports.updateStatus = async serviceStatus => {
   const result = {};
   try {
     result.serviceStatus = await StatusModel.findByIdAndUpdate(
@@ -37,7 +37,7 @@ const updateStatus = async serviceStatus => {
   return result;
 };
 
-const deleteStatus = async id => {
+module.exports.deleteStatus = async id => {
   const result = {};
   try {
     await StatusModel.findByIdAndRemove(id);
@@ -47,8 +47,3 @@ const deleteStatus = async id => {
   }
   return result;
 };
-
-module.exports.createStatus = createStatus;
-module.exports.findStatus = findStatus;
-module.exports.deleteStatus = deleteStatus;
-module.exports.updateStatus = updateStatus;

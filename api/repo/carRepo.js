@@ -3,7 +3,7 @@ const { DefaultModel } = require("../models/servicedefault");
 const { StatusModel } = require("../models/servicestatus");
 const userRepo = require("./userRepo");
 
-const createCar = async (car, userId) => {
+module.exports.createCar = async (car, userId) => {
   const result = {};
   try {
     const defaults = await DefaultModel.find();
@@ -20,7 +20,7 @@ const createCar = async (car, userId) => {
   return result;
 };
 
-const findCar = async id => {
+module.exports.findCar = async id => {
   const result = {};
   try {
     result.car = await CarModel.findById(id);
@@ -31,7 +31,7 @@ const findCar = async id => {
   return result;
 };
 
-const addServicedefault = async (carId, servicedefaults) => {
+module.exports.addServicedefault = async (carId, servicedefaults) => {
   const result = {};
   try {
     result.car = await CarModel.findByIdAndUpdate(
@@ -48,7 +48,7 @@ const addServicedefault = async (carId, servicedefaults) => {
   return result;
 };
 
-const deleteServicedefault = async (carId, servicename) => {
+module.exports.deleteServicedefault = async (carId, servicename) => {
   const result = {};
   try {
     const car = await CarModel.findById(carId);
@@ -64,7 +64,7 @@ const deleteServicedefault = async (carId, servicename) => {
   return result;
 };
 
-const addServicestatus = async (carId, servicestatuses) => {
+module.exports.addServicestatus = async (carId, servicestatuses) => {
   const result = {};
   try {
     result.car = await CarModel.findByIdAndUpdate(
@@ -81,7 +81,7 @@ const addServicestatus = async (carId, servicestatuses) => {
   return result;
 };
 
-const updateCarkm = async (carId, value) => {
+module.exports.updateCarkm = async (carId, value) => {
   const result = {};
   try {
     result.car = await CarModel.findByIdAndUpdate(
@@ -96,7 +96,7 @@ const updateCarkm = async (carId, value) => {
   return result;
 };
 
-const deleteServicestatus = async (carId, servicename) => {
+module.exports.deleteServicestatus = async (carId, servicename) => {
   const result = {};
   try {
     const car = await CarModel.findById(carId);
@@ -112,7 +112,7 @@ const deleteServicestatus = async (carId, servicename) => {
   return result;
 };
 
-const deleteCar = async id => {
+module.exports.deleteCar = async id => {
   const result = {};
   try {
     await CarModel.findByIdAndRemove(id);
@@ -121,12 +121,3 @@ const deleteCar = async id => {
     result.err = err;
   }
 };
-
-module.exports.createCar = createCar;
-module.exports.findCar = findCar;
-module.exports.addServicedefault = addServicedefault;
-module.exports.deleteServicedefault = deleteServicedefault;
-module.exports.addServicestatus = addServicestatus;
-module.exports.deleteServicestatus = deleteServicestatus;
-module.exports.deleteCar = deleteCar;
-module.exports.updateCarkm = updateCarkm;

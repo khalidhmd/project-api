@@ -1,6 +1,6 @@
-const ServicelogModel = require('../models/servicelog');
+const ServicelogModel = require("../models/servicelog");
 
-const createServicelog = async (servicelogs) => {
+module.exports.createServicelog = async servicelogs => {
   const result = {};
   try {
     result.servicelogs = await ServicelogModel.insertMany(servicelogs);
@@ -9,20 +9,22 @@ const createServicelog = async (servicelogs) => {
     result.err = err;
   }
   return result;
-}
+};
 
-const findServicelogs = async (carId) => {
+module.exports.findServicelogs = async carId => {
   const result = {};
   try {
-    result.servicelogs = await ServicelogModel.find().where('carid').equals(carId);
+    result.servicelogs = await ServicelogModel.find()
+      .where("carid")
+      .equals(carId);
     result.err = null;
   } catch (err) {
     result.err = err;
   }
   return result;
-}
+};
 
-const deleteServicelog = async (id) => {
+module.exports.deleteServicelog = async id => {
   const result = {};
   try {
     await ServicelogModel.findByIdAndRemove(id);
@@ -31,8 +33,4 @@ const deleteServicelog = async (id) => {
     result.err = err;
   }
   return result;
-}
-
-module.exports.createServicelog = createServicelog;
-module.exports.findServicelogs = findServicelogs;
-module.exports.deleteServicelog = deleteServicelog;
+};

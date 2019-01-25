@@ -1,6 +1,6 @@
-const GovModel = require('../models/gov');
+const GovModel = require("../models/gov");
 
-const createGov = async (gov) => {
+module.exports.createGov = async gov => {
   const result = {};
   try {
     result.gov = await GovModel.create(gov);
@@ -9,20 +9,24 @@ const createGov = async (gov) => {
     result.err = err;
   }
   return result;
-}
+};
 
-const addZone = async (govId, zone) => {
+module.exports.addZone = async (govId, zone) => {
   const result = {};
   try {
-    result.gov = await GovModel.findByIdAndUpdate(govId, { $addToSet: { zones: zone} }, { new: true});
+    result.gov = await GovModel.findByIdAndUpdate(
+      govId,
+      { $addToSet: { zones: zone } },
+      { new: true }
+    );
     result.err = null;
   } catch (err) {
     result.err = err;
   }
   return result;
-}
+};
 
-const findGov = async (id) => {
+module.exports.findGov = async id => {
   const result = {};
   try {
     result.gov = await GovModel.findById(id);
@@ -31,20 +35,24 @@ const findGov = async (id) => {
     result.err = err;
   }
   return result;
-}
+};
 
-const deleteZone = async (govId, zone) => {
+module.exports.deleteZone = async (govId, zone) => {
   const result = {};
   try {
-    result.gov = await GovModel.findByIdAndUpdate(govId, { $pull: {zones: zone}}, { new: true});
+    result.gov = await GovModel.findByIdAndUpdate(
+      govId,
+      { $pull: { zones: zone } },
+      { new: true }
+    );
     result.err = null;
   } catch (err) {
     result.err = err;
   }
   return result;
-}
+};
 
-const deleteGov = async (id) => {
+module.exports.deleteGov = async id => {
   const result = {};
   try {
     await GovModel.findByIdAndRemove(id);
@@ -53,10 +61,4 @@ const deleteGov = async (id) => {
     result.err = err;
   }
   return result;
-}
-
-module.exports.createGov = createGov;
-module.exports.findGov = findGov;
-module.exports.addZone = addZone;
-module.exports.deleteZone = deleteZone;
-module.exports.deleteGov = deleteGov;
+};

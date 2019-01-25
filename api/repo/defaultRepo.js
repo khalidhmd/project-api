@@ -1,6 +1,6 @@
 const { DefaultModel } = require("../models/servicedefault");
 
-const createDefault = async serviceDefault => {
+module.exports.createDefault = async serviceDefault => {
   const result = {};
   try {
     result.serviceDefault = await DefaultModel.create(serviceDefault);
@@ -11,7 +11,7 @@ const createDefault = async serviceDefault => {
   return result;
 };
 
-const findDefault = async id => {
+module.exports.findDefault = async id => {
   const result = {};
   try {
     result.serviceDeafault = await DefaultModel.findById(id);
@@ -22,7 +22,7 @@ const findDefault = async id => {
   return result;
 };
 
-const updateDefault = async serviceDefault => {
+module.exports.updateDefault = async serviceDefault => {
   const result = {};
   try {
     result.serviceDefault = await DefaultModel.findByIdAndUpdate(
@@ -37,7 +37,7 @@ const updateDefault = async serviceDefault => {
   return result;
 };
 
-const deleteDefault = async id => {
+module.exports.deleteDefault = async id => {
   const result = {};
   try {
     await DefaultModel.findByIdAndRemove(id);
@@ -47,8 +47,3 @@ const deleteDefault = async id => {
   }
   return result;
 };
-
-module.exports.createDefault = createDefault;
-module.exports.findDefault = findDefault;
-module.exports.deleteDefault = deleteDefault;
-module.exports.updateDefault = updateDefault;

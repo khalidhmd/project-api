@@ -1,7 +1,7 @@
 const PostModel = require("../models/post");
 const userRepo = require("./userRepo");
 
-const createPost = async (post, userId) => {
+module.exports.createPost = async (post, userId) => {
   const result = {};
   try {
     result.post = await PostModel.create(post);
@@ -14,7 +14,7 @@ const createPost = async (post, userId) => {
   return result;
 };
 
-const findPost = async id => {
+module.exports.findPost = async id => {
   const result = {};
   try {
     result.post = await PostModel.findById(id);
@@ -25,7 +25,7 @@ const findPost = async id => {
   return result;
 };
 
-const getUserPosts = async userId => {
+module.exports.getUserPosts = async userId => {
   const result = {};
   try {
     result.posts = await PostModel.find()
@@ -38,7 +38,7 @@ const getUserPosts = async userId => {
   return result;
 };
 
-const addComment = async (postId, commentId) => {
+module.exports.addComment = async (postId, commentId) => {
   const result = {};
   try {
     result.post = await PostModel.findByIdAndUpdate(
@@ -55,7 +55,7 @@ const addComment = async (postId, commentId) => {
   return result;
 };
 
-const addPhoto = async (postId, photoPath) => {
+module.exports.addPhoto = async (postId, photoPath) => {
   const result = {};
   try {
     result.post = await PostModel.findByIdAndUpdate(
@@ -72,7 +72,7 @@ const addPhoto = async (postId, photoPath) => {
   return result;
 };
 
-const deleteComment = async (postId, commentId) => {
+module.exports.deleteComment = async (postId, commentId) => {
   const result = {};
   try {
     result.post = await PostModel.findByIdAndUpdate(
@@ -89,7 +89,7 @@ const deleteComment = async (postId, commentId) => {
   return result;
 };
 
-const deletePhoto = async (postId, photoPath) => {
+module.exports.deletePhoto = async (postId, photoPath) => {
   const result = {};
   try {
     result.post = await PostModel.findByIdAndUpdate(
@@ -106,7 +106,7 @@ const deletePhoto = async (postId, photoPath) => {
   return result;
 };
 
-const reportPost = async id => {
+module.exports.reportPost = async id => {
   const result = {};
   try {
     result.post = await PostModel.findByIdAndUpdate(
@@ -121,7 +121,7 @@ const reportPost = async id => {
   return result;
 };
 
-const setSold = async id => {
+module.exports.setSold = async id => {
   const result = {};
   try {
     result.post = await PostModel.findByIdAndUpdate(
@@ -136,7 +136,7 @@ const setSold = async id => {
   return result;
 };
 
-const deletePost = async id => {
+module.exports.deletePost = async id => {
   const result = {};
   try {
     await PostModel.findByIdAndRemove(id);
@@ -146,14 +146,3 @@ const deletePost = async id => {
   }
   return result;
 };
-
-module.exports.createPost = createPost;
-module.exports.findPost = findPost;
-module.exports.addComment = addComment;
-module.exports.addPhoto = addPhoto;
-module.exports.deleteComment = deleteComment;
-module.exports.deletePost = deletePost;
-module.exports.deletePhoto = deletePhoto;
-module.exports.reportPost = reportPost;
-module.exports.setSold = setSold;
-module.exports.getUserPosts = getUserPosts;

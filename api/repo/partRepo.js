@@ -1,6 +1,6 @@
-const PartModel = require('../models/part');
+const PartModel = require("../models/part");
 
-const createPart = async (part) => {
+module.exports.createPart = async part => {
   const result = {};
   try {
     result.part = await PartModel.create(part);
@@ -9,9 +9,9 @@ const createPart = async (part) => {
     result.err = err;
   }
   return result;
-}
+};
 
-const findPart = async (id) => {
+module.exports.findPart = async id => {
   const result = {};
   try {
     result.part = await PartModel.findById(id);
@@ -20,9 +20,9 @@ const findPart = async (id) => {
     result.err = err;
   }
   return result;
-}
+};
 
-const deletePart = async (id) => {
+module.exports.deletePart = async id => {
   const result = {};
   try {
     await PartModel.findByIdAndRemove(id);
@@ -31,8 +31,4 @@ const deletePart = async (id) => {
     result.err = err;
   }
   return result;
-}
-
-module.exports.createPart = createPart;
-module.exports.findPart = findPart;
-module.exports.deletePart = deletePart;
+};
