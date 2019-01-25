@@ -1,6 +1,6 @@
 const assert = require("chai").assert;
 const UserModel = require("../api/models/user");
-var userRepo = require("../api/repo/userRepo");
+const userRepo = require("../api/repo/userRepo");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");

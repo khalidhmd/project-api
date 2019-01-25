@@ -1,6 +1,6 @@
 const assert = require("chai").assert;
 const PostModel = require("../api/models/post");
-var postRepo = require("../api/repo/postRepo");
+const postRepo = require("../api/repo/postRepo");
 const mongoose = require("mongoose");
 const userRepo = require("../api/repo/userRepo");
 

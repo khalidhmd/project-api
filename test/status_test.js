@@ -1,6 +1,6 @@
 const assert = require("chai").assert;
 const { StatusModel } = require("../api/models/servicestatus");
-var statusRepo = require("../api/repo/statusRepo");
+const statusRepo = require("../api/repo/statusRepo");
 
 describe("Testing status Repo", function() {
   let id;

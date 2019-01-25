@@ -1,6 +1,6 @@
 const assert = require("chai").assert;
 const { DefaultModel } = require("../api/models/servicedefault");
-var defaultRepo = require("../api/repo/defaultRepo");
+const defaultRepo = require("../api/repo/defaultRepo");
 
 describe("Testing default Repo", function() {
   let id;

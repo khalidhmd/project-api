@@ -1,9 +1,21 @@
 const CommentModel = require("../models/comment");
+const userRepo = require("./userRepo");
+const postRepo = require("./postRepo");
 
 module.exports.createComment = async comment => {
   const result = {};
   try {
     result.comment = await CommentModel.create(comment);
+    const { post } = await postRepo.addComment(
+      result.comment.postid,
+      result.comment.id
+    );
+    const { user } = await userRepo.addPost(
+      result.comment.userid,
+      result.comment.postid
+    );
+    result.userPosts = user.posts;
+    result.postComments = post.comments;
     result.err = null;
   } catch (err) {
     result.err = err;
