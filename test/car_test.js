@@ -4,6 +4,8 @@ const carRepo = require("../api/repo/carRepo");
 const statusRepo = require("../api/repo/statusRepo");
 const defaultRepo = require("../api/repo/defaultRepo");
 const userRepo = require("../api/repo/userRepo");
+const { DefaultModel } = require("../api/models/servicedefault");
+const { StatusModel } = require("../api/models/servicestatus");
 
 describe("Testing car Repo repo", function() {
   let id, userId;
@@ -84,5 +86,10 @@ describe("Testing car Repo repo", function() {
     const result = await carRepo.findCar(id);
     assert.isNull(result.car);
     assert.isNull(result.err);
+  });
+
+  after(async function() {
+    await DefaultModel.deleteMany();
+    await StatusModel.deleteMany();
   });
 });

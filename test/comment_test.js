@@ -44,8 +44,6 @@ describe("Testing comment Repo", function() {
     assert.strictEqual(result.comment.id, comment.id);
     assert.lengthOf(result.postComments, 1);
     assert.lengthOf(result.userPosts, 1);
-    console.log(result.postComments[0]);
-    console.log(result.comment.id);
     assert.include(result.postComments, result.comment.id);
     assert.include(result.userPosts, result.comment.postid);
     assert.isNull(result.err);
