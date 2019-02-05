@@ -5,8 +5,6 @@ const statusRepo = require("../api/repo/statusRepo");
 const defaultRepo = require("../api/repo/defaultRepo");
 const userRepo = require("../api/repo/userRepo");
 const UserModel = require("../api/models/user");
-const { DefaultModel } = require("../api/models/servicedefault");
-const { StatusModel } = require("../api/models/servicestatus");
 
 describe("Testing car Repo repo", function() {
   let id, userId;

@@ -35,9 +35,11 @@ describe("Testing post Repo repo", function() {
       userid: userId
     });
     const result = await postRepo.createPost(post, userId);
+    const { user } = await userRepo.findUser(userId);
     assert.strictEqual(result.post.id, post.id);
     assert.isNull(result.err);
     assert.lengthOf(result.userPosts, 1);
+    assert.lengthOf(user.posts, 1);
     id = result.post.id;
   });
 
@@ -96,9 +98,10 @@ describe("Testing post Repo repo", function() {
   });
 
   it("Deletes user post from DB", async function() {
-    const result = await postRepo.deletePost(id);
+    const result = await postRepo.deletePost(id, userId);
     const result1 = await postRepo.findPost(id);
     assert.isNull(result1.post);
     assert.isNull(result.err);
+    assert.lengthOf(result.user.posts, 0);
   });
 });

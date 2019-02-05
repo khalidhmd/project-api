@@ -138,10 +138,12 @@ module.exports.setSold = async id => {
   return result;
 };
 
-module.exports.deletePost = async id => {
+module.exports.deletePost = async (id, userId) => {
   const result = {};
   try {
     await PostModel.findByIdAndRemove(id);
+    const { user } = await userRepo.deletePost(userId, id);
+    result.user = user;
     result.err = null;
   } catch (err) {
     result.err = err;
