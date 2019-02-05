@@ -9,6 +9,8 @@ module.exports.createPost = async (post, userId) => {
     result.userPosts = user.posts;
     result.err = null;
   } catch (err) {
+    if (result.post) await PostModel.findByIdAndDelete(result.post.id);
+    if (result.userPosts) await userRepo.deletePost(user.id, result.post.id);
     result.err = err;
   }
   return result;

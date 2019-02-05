@@ -1,9 +1,10 @@
 const assert = require("chai").assert;
 const ServicelogModel = require("../api/models/servicelog");
 const servicelogRepo = require("../api/repo/servicelogRepo");
-const mongoose = require("mongoose");
+const userRepo = require("../api/repo/userRepo");
 const carRepo = require("../api/repo/carRepo");
 const CarModel = require("../api/models/car");
+const UserModel = require("../api/models/user");
 const { DefaultModel } = require("../api/models/servicedefault");
 const { StatusModel } = require("../api/models/servicestatus");
 const statusRepo = require("../api/repo/statusRepo");
@@ -14,17 +15,27 @@ describe("Testing service log Repo", function() {
   let carid;
 
   before(async function() {
+    await UserModel.deleteMany();
     await ServicelogModel.deleteMany();
     await CarModel.deleteMany();
     await statusRepo.createStatus({ name: "تغيير زيت" });
     await defaultRepo.createDefault({ name: "تغيير زيت", km: 10, months: 12 });
+    const { user } = await userRepo.createUser({
+      name: "user 1",
+      password: "password",
+      email: "email 1",
+      mobile: "mobile 1",
+      gov: "gov 1",
+      zone: "zone 1"
+    });
+    console.log(user);
     const { car } = await carRepo.createCar(
       {
         make: "Mitsubishi",
         model: "Lancer",
         km: 5
       },
-      new mongoose.Types.ObjectId()
+      user.id
     );
     carid = car.id;
   });

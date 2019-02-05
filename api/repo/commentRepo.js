@@ -10,14 +10,18 @@ module.exports.createComment = async comment => {
       result.comment.postid,
       result.comment.id
     );
+    result.postComments = post.comments;
     const { user } = await userRepo.addPost(
       result.comment.userid,
       result.comment.postid
     );
     result.userPosts = user.posts;
-    result.postComments = post.comments;
     result.err = null;
   } catch (err) {
+    if (result.comment) await CommentModel.findByIdAndDelete(result.comment.id);
+    if (result.postComments)
+      await postRepo.deleteComment(post.id, result.comment.id);
+    if (result.userPosts) await userRepo.deletePost(user.id, post.id);
     result.err = err;
   }
   return result;

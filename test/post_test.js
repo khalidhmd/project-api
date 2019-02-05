@@ -3,6 +3,7 @@ const PostModel = require("../api/models/post");
 const postRepo = require("../api/repo/postRepo");
 const mongoose = require("mongoose");
 const userRepo = require("../api/repo/userRepo");
+const UserModel = require("../api/models/user");
 
 describe("Testing post Repo repo", function() {
   let id;
@@ -12,11 +13,12 @@ describe("Testing post Repo repo", function() {
 
   before(async function() {
     await PostModel.deleteMany();
+    await UserModel.deleteMany();
     const { user } = await userRepo.createUser({
-      name: "user 2",
+      name: "user 1",
       password: "password",
-      email: "email 2",
-      mobile: "mobile 2",
+      email: "email 1",
+      mobile: "mobile 1",
       gov: "gov 1",
       zone: "zone 1"
     });

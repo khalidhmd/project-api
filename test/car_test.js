@@ -4,6 +4,7 @@ const carRepo = require("../api/repo/carRepo");
 const statusRepo = require("../api/repo/statusRepo");
 const defaultRepo = require("../api/repo/defaultRepo");
 const userRepo = require("../api/repo/userRepo");
+const UserModel = require("../api/models/user");
 const { DefaultModel } = require("../api/models/servicedefault");
 const { StatusModel } = require("../api/models/servicestatus");
 
@@ -12,6 +13,7 @@ describe("Testing car Repo repo", function() {
 
   before(async function() {
     await CarModel.deleteMany();
+    await UserModel.deleteMany();
     await statusRepo.createStatus({ name: "تغيير زيت", nextkm: 20 });
     await defaultRepo.createDefault({ name: "تغيير زيت" });
     const { user } = await userRepo.createUser({
@@ -28,10 +30,12 @@ describe("Testing car Repo repo", function() {
   it("Saves user car to DB", async function() {
     const car = new CarModel({ make: "Hundai", model: "Verna" });
     const result = await carRepo.createCar(car, userId);
+    const { user } = await userRepo.findUser(userId);
     assert.isNull(result.err);
     assert.strictEqual(result.car.id, car.id);
     assert.lengthOf(result.car.servicedefaults, 1);
     assert.lengthOf(result.car.servicestatuses, 1);
+    assert.lengthOf(user.cars, 1);
     assert.lengthOf(result.cars, 1);
     id = result.car.id;
   });
@@ -70,7 +74,7 @@ describe("Testing car Repo repo", function() {
       { name: "تغيير دورة تبريد", nextkm: 20 }
     ]);
     assert.strictEqual(result.car.servicestatuses[1].name, "تغيير دورة تبريد");
-    assert(result.car.servicestatuses[1].nextkm, 20);
+    assert.strictEqual(result.car.servicestatuses[1].nextkm, 20);
     assert.lengthOf(result.car.servicestatuses, 2);
     assert.isNull(result.err);
   });
@@ -82,14 +86,11 @@ describe("Testing car Repo repo", function() {
   });
 
   it("Deletes user car from DB", async function() {
-    await carRepo.deleteCar(id);
-    const result = await carRepo.findCar(id);
+    await carRepo.deleteCar(id, userId);
+    const result = await carRepo.findCar(id, userId);
+    const { user } = await userRepo.findUser(userId);
+    assert.lengthOf(user.cars, 0);
     assert.isNull(result.car);
     assert.isNull(result.err);
-  });
-
-  after(async function() {
-    await DefaultModel.deleteMany();
-    await StatusModel.deleteMany();
   });
 });

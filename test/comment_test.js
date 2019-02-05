@@ -3,6 +3,7 @@ const CommentModel = require("../api/models/comment");
 const commentRepo = require("../api/repo/commentRepo");
 const userRepo = require("../api/repo/userRepo");
 const postRepo = require("../api/repo/postRepo");
+const UserModel = require("../api/models/user");
 
 describe("Testing comment Repo", function() {
   let id;
@@ -11,11 +12,12 @@ describe("Testing comment Repo", function() {
 
   before(async function() {
     await CommentModel.deleteMany();
+    await UserModel.deleteMany();
     const { user } = await userRepo.createUser({
-      name: "user 0",
+      name: "user 1",
       password: "password",
-      email: "email 0",
-      mobile: "mobile 0",
+      email: "email 1",
+      mobile: "mobile 1",
       gov: "gov 1",
       zone: "zone 1"
     });

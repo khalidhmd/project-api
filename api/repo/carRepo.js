@@ -15,6 +15,8 @@ module.exports.createCar = async (car, userId) => {
     result.cars = user.cars;
     result.err = null;
   } catch (err) {
+    if (result.car) await CarModel.findByIdAndDelete(result.car.id);
+    if (result.cars) await userRepo.deleteCar(userId, result.car.id);
     result.err = err;
   }
   return result;
@@ -112,10 +114,11 @@ module.exports.deleteServicestatus = async (carId, servicename) => {
   return result;
 };
 
-module.exports.deleteCar = async id => {
+module.exports.deleteCar = async (id, userId) => {
   const result = {};
   try {
     await CarModel.findByIdAndRemove(id);
+    await userRepo.deleteCar(userId, id);
     result.err = null;
   } catch (err) {
     result.err = err;
