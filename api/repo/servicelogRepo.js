@@ -3,10 +3,12 @@ const carRepo = require("./carRepo");
 
 module.exports.createServicelog = async servicelog => {
   const result = {};
+  let oldCarKm, oldDate, oldNextKm;
   try {
     const { car } = await carRepo.findCar(servicelog.carid);
     const default1 = car.servicedefaults.find(e => e.name === servicelog.name);
     servicelog.km = car.km;
+    oldCarKm = car.km;
     //calculate nextdate
     const nextdate = new Date();
     nextdate.setDate(nextdate.getDay() + default1.months * 30);
@@ -14,6 +16,8 @@ module.exports.createServicelog = async servicelog => {
     car.servicestatuses = car.servicestatuses.map(e => {
       if (e.name === servicelog.name) {
         e.nextkm = car.km + default1.km;
+        oldDate = e.nextdate;
+        oldNextKm = e.nextkm;
         e.nextdate = nextdate;
       }
       return e;
@@ -22,6 +26,16 @@ module.exports.createServicelog = async servicelog => {
     result.servicelog = await ServicelogModel.create(servicelog);
     result.err = null;
   } catch (err) {
+    if (result.servicelog)
+      await ServicelogModel.findByIdAndDelete(result.servicelog.id);
+    car.km = oldCarKm;
+    car.servicestatuses = car.servicestatuses.map(e => {
+      if (e.name === servicelog.name) {
+        e.nextkm = oldNextKm;
+        e.nextdate = oldDate;
+      }
+      return e;
+    });
     result.err = err;
   }
   return result;

@@ -28,7 +28,6 @@ describe("Testing service log Repo", function() {
       gov: "gov 1",
       zone: "zone 1"
     });
-    console.log(user);
     const { car } = await carRepo.createCar(
       {
         make: "Mitsubishi",
@@ -74,11 +73,5 @@ describe("Testing service log Repo", function() {
     const result1 = await servicelogRepo.findServicelogs(carid);
     assert.lengthOf(result1.servicelogs, 0);
     assert.isNull(result.err);
-  });
-
-  after(async function() {
-    await DefaultModel.deleteMany();
-    await StatusModel.deleteMany();
-    await CarModel.deleteMany();
   });
 });
