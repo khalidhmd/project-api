@@ -79,10 +79,11 @@ module.exports.getComment = async id => {
   return result;
 };
 
-module.exports.deleteComment = async id => {
+module.exports.deleteComment = async (id, postId) => {
   const result = {};
   try {
     await CommentModel.findByIdAndRemove(id);
+    await postRepo.deleteComment(postId, id);
     result.err = null;
   } catch (err) {
     result.err = err;

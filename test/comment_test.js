@@ -43,9 +43,11 @@ describe("Testing comment Repo", function() {
       userid: userid
     });
     const result = await commentRepo.createComment(comment);
+    const { post } = await postRepo.findPost(postid);
+    const { user } = await userRepo.findUser(userid);
     assert.strictEqual(result.comment.id, comment.id);
-    assert.lengthOf(result.postComments, 1);
-    assert.lengthOf(result.userPosts, 1);
+    assert.include(user.posts, result.comment.postid);
+    assert.include(post.comments, result.comment.id);
     assert.include(result.postComments, result.comment.id);
     assert.include(result.userPosts, result.comment.postid);
     assert.isNull(result.err);
@@ -71,8 +73,10 @@ describe("Testing comment Repo", function() {
   });
 
   it("Deletes comment from DB", async function() {
-    await commentRepo.deleteComment(id);
+    await commentRepo.deleteComment(id, postid);
     const result = await commentRepo.getComment(id);
+    const { post } = await postRepo.findPost(postid);
+    assert.notInclude(post.comments, id);
     assert.isNull(result.comment);
     assert.isNull(result.err);
   });
