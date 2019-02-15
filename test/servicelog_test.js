@@ -11,6 +11,7 @@ const statusRepo = require("../api/repo/statusRepo");
 const defaultRepo = require("../api/repo/defaultRepo");
 
 describe("Testing service log Repo", function() {
+  this.timeout(5000);
   let log;
   let carid;
 

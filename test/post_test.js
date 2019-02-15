@@ -6,6 +6,7 @@ const userRepo = require("../api/repo/userRepo");
 const UserModel = require("../api/models/user");
 
 describe("Testing post Repo repo", function() {
+  this.timeout(5000);
   let id;
   let userId;
   let commentId;

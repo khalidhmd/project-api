@@ -7,6 +7,7 @@ const userRepo = require("../api/repo/userRepo");
 const UserModel = require("../api/models/user");
 
 describe("Testing car Repo repo", function() {
+  this.timeout(5000);
   let id, userId;
 
   before(async function() {

@@ -6,6 +6,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 describe("Testing user Repo repo", function() {
+  this.timeout(5000);
   let id;
   let carId, postId;
 

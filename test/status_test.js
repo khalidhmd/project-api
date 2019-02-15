@@ -3,6 +3,7 @@ const { StatusModel } = require("../api/models/servicestatus");
 const statusRepo = require("../api/repo/statusRepo");
 
 describe("Testing status Repo", function() {
+  this.timeout(5000);
   let id;
 
   before(async function() {

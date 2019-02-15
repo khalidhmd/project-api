@@ -3,6 +3,7 @@ const GovModel = require("../api/models/gov");
 const govRepo = require("../api/repo/govRepo");
 
 describe("Testing govRepo repo", function() {
+  this.timeout(5000);
   let id;
 
   before(async function() {

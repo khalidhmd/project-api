@@ -3,6 +3,7 @@ const { DefaultModel } = require("../api/models/servicedefault");
 const defaultRepo = require("../api/repo/defaultRepo");
 
 describe("Testing default Repo", function() {
+  this.timeout(5000);
   let id;
 
   before(async function() {

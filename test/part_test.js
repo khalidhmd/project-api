@@ -3,6 +3,7 @@ const PartModel = require("../api/models/part");
 const partRepo = require("../api/repo/partRepo");
 
 describe("Testing partRepo repo", function() {
+  this.timeout(5000);
   let id;
 
   before(async function() {

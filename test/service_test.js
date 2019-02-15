@@ -3,6 +3,7 @@ const ServiceModel = require("../api/models/service");
 const serviceRepo = require("../api/repo/serviceRepo");
 
 describe("Testing service Repo", function() {
+  this.timeout(5000);
   let id;
 
   before(async function() {

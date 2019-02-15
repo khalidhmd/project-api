@@ -3,6 +3,7 @@ const MakeModel = require("../api/models/make");
 const makeRepo = require("../api/repo/makeRepo");
 
 describe("Testing makeRepo repo", function() {
+  this.timeout(5000);
   let id;
 
   before(async function() {
