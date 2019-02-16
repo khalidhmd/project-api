@@ -7,7 +7,7 @@ var app = express();
 app.use(bodyParser.json());
 app.use(cors());
 app.get('/', function (req, res) {
-  res.send('hello');
+  res.send('hello app refactored!');
 })
 
 
